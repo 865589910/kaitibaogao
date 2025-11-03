@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小学低段数学易错题统计表</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 25px;
+            font-size: 15px;
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            padding: 20px;
+            border-left: 5px solid #667eea;
+            margin-bottom: 25px;
+            border-radius: 8px;
+        }
+        
+        .info-box h3 {
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+        
+        .info-box ul {
+            margin-left: 25px;
+            color: #555;
+            line-height: 2;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 12px 24px;
+            background-color: #f0f0f0;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .tab:hover {
+            background-color: #e0e0e0;
+            transform: translateY(-2px);
+        }
+        
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 18px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 12px;
+            text-align: center;
+            font-weight: bold;
+            border: 1px solid #ddd;
+            font-size: 18px;
+        }
+        
+        td {
+            padding: 14px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 16px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        tr:hover {
+            background-color: #e3f2fd;
+            transition: background-color 0.2s;
+        }
+        
+        input[type="text"], 
+        input[type="number"],
+        input[type="date"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+        
+        textarea {
+            min-height: 50px;
+            resize: vertical;
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+        }
+        
+        .btn-group {
+            margin: 20px 0;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .btn-info {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        
+        .stats-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin: 10px 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-item {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .tabs, .btn-group, .info-box {
+                display: none;
+            }
+            .tab-content {
+                display: block !important;
+            }
+            .container {
+                box-shadow: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            table {
+                font-size: 12px;
+            }
+            th, td {
+                padding: 8px 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 小学低段数学易错题统计表</h1>
+        <div class="subtitle">从纠错到悟错：小学低段数学错误资源化教学策略的深度研究</div>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab(0)">📋 易错题统计总表</button>
+            <button class="tab" onclick="switchTab(1)">📊 错误类型统计</button>
+            <button class="tab" onclick="switchTab(2)">📖 知识点统计</button>
+            <button class="tab" onclick="switchTab(3)">👤 学生错误档案</button>
+            <button class="tab" onclick="switchTab(4)">📈 纠错效果跟踪</button>
+            <button class="tab" onclick="switchTab(5)">📝 类似题目生成</button>
+        </div>
+        
+        <!-- 工作表1: 易错题统计总表 -->
+        <div class="tab-content active" id="tab0">
+            <div class="btn-group">
+                <button onclick="addRow(0)">➕ 添加行</button>
+                <button onclick="deleteLastRow(0)" class="btn-secondary">➖ 删除最后一行</button>
+                <button onclick="exportToExcel()" class="btn-success">📥 导出Excel</button>
+                <button onclick="saveData()" class="btn-info">💾 保存数据</button>
+                <button onclick="autoGenerateStats()" class="btn-info">📊 自动生成统计</button>
+                <button onclick="clearData(0)" class="btn-secondary">🔄 清空数据</button>
+            </div>
+            <div style="overflow-x: auto;">
+                <table id="table0">
+                    <thead>
+                        <tr>
+                            <th style="width: 60px;">序号</th>
+                            <th style="width: 100px;">学生姓名</th>
+                            <th style="width: 100px;">班级</th>
+                            <th style="width: 130px;">知识点类别</th>
+                            <th style="width: 200px;">具体题目/题型描述</th>
+                            <th style="width: 120px;">错误类型</th>
+                            <th style="width: 90px;">班级出错人数</th>
+                            <th style="width: 200px;">错误原因分析</th>
+                            <th style="width: 200px;">纠错措施</th>
+                            <th style="width: 130px;">纠错后掌握情况</th>
+                            <th style="width: 150px;">备注</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody0">
+                        <!-- 示例数据将由JS生成 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- 工作表2: 错误类型分类统计 -->
+        <div class="tab-content" id="tab1">
+            <div class="btn-group">
+                <button onclick="addRow(1)">➕ 添加行</button>
+                <button onclick="deleteLastRow(1)" class="btn-secondary">➖ 删除最后一行</button>
+                <button onclick="calculateStats()" class="btn-info">📊 自动统计</button>
+                <button onclick="clearData(1)" class="btn-secondary">🔄 清空数据</button>
+            </div>
+            <table id="table1">
+                <thead>
+                    <tr>
+                        <th style="width: 200px;">错误类型</th>
+                        <th style="width: 120px;">出现次数</th>
+                        <th style="width: 120px;">占比(%)</th>
+                        <th>典型错误描述</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody1">
+                    <!-- 数据将由JS生成 -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 工作表3: 知识点易错统计 -->
+        <div class="tab-content" id="tab2">
+            <div class="btn-group">
+                <button onclick="addRow(2)">➕ 添加行</button>
+                <button onclick="deleteLastRow(2)" class="btn-secondary">➖ 删除最后一行</button>
+                <button onclick="clearData(2)" class="btn-secondary">🔄 清空数据</button>
+            </div>
+            <table id="table2">
+                <thead>
+                    <tr>
+                        <th style="width: 200px;">知识点</th>
+                        <th style="width: 120px;">错误人数</th>
+                        <th style="width: 120px;">错误率(%)</th>
+                        <th style="width: 300px;">主要错误表现</th>
+                        <th>教学改进建议</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody2">
+                    <!-- 数据将由JS生成 -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 工作表4: 学生个人错误档案 -->
+        <div class="tab-content" id="tab3">
+            <div class="btn-group">
+                <select id="classFilter" onchange="filterByClass()">
+                    <option value="">所有班级</option>
+                    <option value="二(1)班">二(1)班</option>
+                    <option value="二(2)班">二(2)班</option>
+                    <option value="二(3)班">二(3)班</option>
+                    <option value="二(4)班">二(4)班</option>
+                    <option value="二(5)班">二(5)班</option>
+                    <option value="二(6)班">二(6)班</option>
+                </select>
+                <input type="text" id="studentFilter" placeholder="学生姓名" oninput="filterByStudent()">
+                <button onclick="addRow(3)">➕ 添加行</button>
+                <button onclick="deleteLastRow(3)" class="btn-secondary">➖ 删除最后一行</button>
+                <button onclick="clearData(3)" class="btn-secondary">🔄 清空数据</button>
+            </div>
+            <table id="table3">
+                <thead>
+                    <tr>
+                        <th style="width: 120px;">学生姓名</th>
+                        <th style="width: 100px;">班级</th>
+                        <th style="width: 250px;">薄弱知识点</th>
+                        <th style="width: 150px;">易错类型</th>
+                        <th style="width: 250px;">纠错策略</th>
+                        <th style="width: 200px;">跟踪效果</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody3">
+                    <!-- 数据将由JS生成 -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 工作表5: 纠错效果跟踪表 -->
+        <div class="tab-content" id="tab4">
+            <div class="btn-group">
+                <button onclick="addRow(4)">➕ 添加行</button>
+                <button onclick="deleteLastRow(4)" class="btn-secondary">➖ 删除最后一行</button>
+                <button onclick="clearData(4)" class="btn-secondary">🔄 清空数据</button>
+            </div>
+            <table id="table4">
+                <thead>
+                    <tr>
+                        <th style="width: 120px;">学生姓名</th>
+                        <th style="width: 200px;">错误知识点</th>
+                        <th style="width: 130px;">初次出错日期</th>
+                        <th style="width: 130px;">纠错日期</th>
+                        <th style="width: 250px;">纠错措施</th>
+                        <th style="width: 150px;">纠错效果</th>
+                        <th style="width: 200px;">备注</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody4">
+                    <!-- 数据将由JS生成 -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 工作表6: 类似题目生成 -->
+        <div class="tab-content" id="tab5">
+            <div class="btn-group">
+                <button onclick="generateSimilarQuestions()" class="btn-success">🔄 生成类似题目</button>
+                <button onclick="clearGeneratedQuestions()" class="btn-secondary">🗑️ 清空生成题目</button>
+            </div>
+            <div id="questionGenerator" style="margin: 20px 0; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+                <h3 style="margin-bottom: 15px; color: #2c3e50;">选择易错题生成类似题目</h3>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px;">
+                    <select id="errorTopicSelect" style="flex: 1; min-width: 200px;">
+                        <option value="">请选择知识点</option>
+                    </select>
+                    <select id="errorTypeSelect" style="flex: 1; min-width: 200px;">
+                        <option value="">请选择错误类型</option>
+                    </select>
+                    <button onclick="loadErrorQuestions()" style="padding: 10px 20px;">🔍 查找相关错题</button>
+                </div>
+                <div id="errorQuestionsList" style="margin-top: 20px;"></div>
+            </div>
+            <div id="generatedQuestions" style="margin-top: 30px;">
+                <h3 style="margin-bottom: 15px; color: #2c3e50;">生成的类似题目</h3>
+                <div id="generatedQuestionsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 数据模板
+        const templates = {
+            0: [ // 易错题统计总表
+                ['', '', '', '', '', '', '', '', '', '', '']
+            ],
+            1: [ // 错误类型分类统计
+                ['计算错误', '0', '0', '进位、退位错误；运算符号看错等'],
+                ['概念混淆', '0', '0', '图形特征混淆；单位换算错误等'],
+                ['审题不清', '0', '0', '题目要求理解错误；遗漏条件等'],
+                ['记忆性错误', '0', '0', '乘法口诀记不住；公式记错等'],
+                ['粗心大意', '0', '0', '抄写错误；看错数字等'],
+                ['逻辑推理错误', '0', '0', '应用题分析错误；数量关系理解错误等'],
+                ['数位混淆', '0', '0', '数字位置写错；数位概念不清等'],
+                ['运算顺序错误', '0', '0', '混合运算顺序错误；括号使用错误等'],
+                ['单位换算错误', '0', '0', '长度、重量、时间单位换算错误等'],
+                ['图形识别错误', '0', '0', '平面图形与立体图形混淆等']
+            ],
+            2: [ // 知识点易错统计
+                ['100以内加减法', '0', '0', '', ''],
+                ['表内乘法', '0', '0', '', ''],
+                ['表内除法', '0', '0', '', ''],
+                ['认识图形', '0', '0', '', ''],
+                ['长度单位', '0', '0', '', ''],
+                ['时间认识', '0', '0', '', ''],
+                ['解决问题', '0', '0', '', ''],
+                ['万以内数的认识', '0', '0', '', ''],
+                ['有余数的除法', '0', '0', '', ''],
+                ['时分秒', '0', '0', '', '']
+            ],
+            3: [ // 学生个人错误档案
+                ['', '', '', '', '', '']
+            ],
+            4: [ // 纠错效果跟踪表
+                ['', '', '', '', '', '', '']
+            ]
+        };
+
+        // 下拉选项数据
+        const dropdownOptions = {
+            classes: ['二(1)班', '二(2)班', '二(3)班', '二(4)班', '二(5)班', '二(6)班'],
+            knowledgePoints: [
+                '100以内加减法', '表内乘法', '表内除法', '万以内数的认识', 
+                '有余数的除法', '时分秒', '长度单位', '重量单位', '认识图形', 
+                '图形的运动', '数据收集整理', '数学广角-推理'
+            ],
+            errorTypes: [
+                '计算错误', '概念混淆', '审题不清', '记忆性错误', 
+                '粗心大意', '逻辑推理错误', '数位混淆', '运算顺序错误', 
+                '单位换算错误', '图形识别错误', '应用题理解错误', '解题方法错误'
+            ],
+            correctionMeasures: [
+                '强化基础练习', '一对一辅导', '小组合作学习', '使用教具演示', 
+                '趣味记忆法', '错题本整理', '变式练习', '家长配合监督', 
+                '思维导图梳理', '每日一练', '同伴互助', '教师个别指导'
+            ],
+            masteryLevels: ['完全掌握', '基本掌握', '正在掌握', '掌握困难', '未掌握'],
+            remarks: ['需持续关注', '重点关注对象', '进步明显', '退步需注意', '稳定发展', '需要加强']
+        };
+
+        // 筛选条件
+        let filterConditions = {
+            class: '',
+            student: ''
+        };
+
+        // 示例数据
+        const sampleData = {
+            0: [
+                ['1', '张三', '二(1)班', '100以内加减法', '45+28=63(写成73)', '计算错误', '3', '进位加法不熟练，忘记进位', '强化进位练习，使用小棒演示', '基本掌握', '需持续关注'],
+                ['2', '李四', '二(1)班', '认识图形', '长方形与正方形混淆', '概念混淆', '2', '对图形特征理解不清', '通过实物对比教学，强化特征记忆', '已掌握', ''],
+                ['3', '王五', '二(2)班', '表内乘法', '7×8记不住', '记忆性错误', '5', '乘法口诀背诵不熟练', '趣味记忆法，编儿歌辅助记忆', '进步中', '家长配合练习'],
+                ['4', '赵六', '二(3)班', '100以内加减法', '64-27=47(写成37)', '退位错误', '4', '退位减法不熟练，忘记借位', '强化退位练习，使用计数器演示', '正在掌握', '需持续关注'],
+                ['5', '钱七', '二(2)班', '表内除法', '24÷4=5(写成5)', '计算错误', '3', '除法计算不熟练', '加强除法练习，使用分组演示', '基本掌握', ''],
+                ['6', '孙八', '二(4)班', '认识图形', '三角形与四边形混淆', '图形识别错误', '2', '对图形边数概念不清', '通过实物触摸认识图形特征', '正在掌握', ''],
+                ['7', '周九', '二(1)班', '100以内加减法', '38+45=73(写成83)', '进位错误', '3', '进位加法不熟练', '强化进位练习，使用小棒演示', '基本掌握', ''],
+                ['8', '吴十', '二(5)班', '表内乘法', '9×6=56(写成54)', '计算错误', '4', '乘法口诀记忆错误', '反复背诵乘法口诀', '掌握困难', '重点关注对象']
+            ]
+        };
+
+        // 初始化数据
+        function initTable(tableIndex) {
+            const tbody = document.getElementById(`tbody${tableIndex}`);
+            tbody.innerHTML = '';
+            
+            const data = sampleData[tableIndex] || templates[tableIndex];
+            data.forEach((row, index) => {
+                addRowWithData(tableIndex, row, index + 1);
+            });
+            
+            loadData();
+        }
+
+        // 创建下拉选择框
+        function createSelect(options, selectedValue, onChange) {
+            const select = document.createElement('select');
+            select.onchange = onChange;
+            
+            // 添加空选项
+            const emptyOption = document.createElement('option');
+            emptyOption.value = '';
+            emptyOption.textContent = '请选择';
+            select.appendChild(emptyOption);
+            
+            options.forEach(option => {
+                const opt = document.createElement('option');
+                opt.value = option;
+                opt.textContent = option;
+                if (option === selectedValue) {
+                    opt.selected = true;
+                }
+                select.appendChild(opt);
+            });
+            
+            return select;
+        }
+
+        // 创建文件上传按钮
+        function createFileUpload(onChange) {
+            const container = document.createElement('div');
+            container.style.display = 'flex';
+            container.style.flexDirection = 'column';
+            container.style.alignItems = 'center';
+            
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = function(e) {
+                onChange(e);
+                // 显示预览
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        preview.src = event.target.result;
+                        preview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            input.style.display = 'none';
+            
+            const button = document.createElement('button');
+            button.textContent = '📷 拍照上传';
+            button.type = 'button';
+            button.onclick = () => input.click();
+            button.style.cssText = `
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                border: none;
+                border-radius: 5px;
+                padding: 5px 10px;
+                font-size: 14px;
+                cursor: pointer;
+            `;
+            
+            const preview = document.createElement('img');
+            preview.style.maxWidth = '100px';
+            preview.style.maxHeight = '100px';
+            preview.style.marginTop = '5px';
+            preview.style.display = 'none';
+            
+            container.appendChild(input);
+            container.appendChild(button);
+            container.appendChild(preview);
+            
+            return container;
+        }
+
+        // 添加行（带数据）
+        function addRowWithData(tableIndex, data, rowNum) {
+            const tbody = document.getElementById(`tbody${tableIndex}`);
+            const tr = document.createElement('tr');
+            
+            if (tableIndex === 0) {
+                // 班级下拉选择
+                const classSelect = createSelect(dropdownOptions.classes, data[2] || '', () => saveData());
+                
+                // 知识点类别下拉选择
+                const knowledgeSelect = createSelect(dropdownOptions.knowledgePoints, data[3] || '', () => saveData());
+                
+                // 错误类型下拉选择
+                const errorTypeSelect = createSelect(dropdownOptions.errorTypes, data[5] || '', () => saveData());
+                
+                // 纠错措施下拉选择（可自定义）
+                const correctionSelect = createSelect(dropdownOptions.correctionMeasures, data[8] || '', () => saveData());
+                
+                // 掌握情况选择
+                const masterySelect = createSelect(dropdownOptions.masteryLevels, data[9] || '', () => saveData());
+                
+                // 备注选择
+                const remarkSelect = createSelect(dropdownOptions.remarks, data[10] || '', () => saveData());
+                
+                // 拍照上传
+                const uploadContainer = createFileUpload(() => saveData());
+                
+                tr.innerHTML = `
+                    <td>${rowNum}</td>
+                    <td><input type="text" value="${data[1] || ''}" onchange="saveData()"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><input type="number" value="${data[6] || '0'}" min="0" onchange="saveData()"></td>
+                    <td><textarea onchange="saveData()">${data[7] || ''}</textarea></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                `;
+                
+                // 插入下拉选择框和上传控件
+                const tds = tr.querySelectorAll('td');
+                tds[2].appendChild(classSelect);
+                tds[3].appendChild(knowledgeSelect);
+                
+                // 创建包含文本输入和上传控件的容器
+                const questionContainer = document.createElement('div');
+                questionContainer.style.display = 'flex';
+                questionContainer.style.flexDirection = 'column';
+                questionContainer.style.alignItems = 'center';
+                questionContainer.style.gap = '5px';
+                
+                const textInput = document.createElement('textarea');
+                textInput.value = data[4] || '';
+                textInput.onchange = () => saveData();
+                textInput.style.width = '100%';
+                textInput.style.minHeight = '60px';
+                textInput.placeholder = '请输入题目描述或上传图片';
+                
+                questionContainer.appendChild(textInput);
+                questionContainer.appendChild(uploadContainer);
+                tds[4].appendChild(questionContainer);
+                
+                tds[5].appendChild(errorTypeSelect);
+                tds[8].appendChild(correctionSelect);
+                tds[9].appendChild(masterySelect);
+                tds[10].appendChild(remarkSelect);
+            } else if (tableIndex === 1) {
+                tr.innerHTML = `
+                    <td><input type="text" value="${data[0] || ''}" onchange="saveData()"></td>
+                    <td><input type="number" value="${data[1] || '0'}" min="0" onchange="saveData()"></td>
+                    <td><input type="number" value="${data[2] || '0'}" min="0" max="100" step="0.1" onchange="saveData()"></td>
+                    <td><textarea onchange="saveData()">${data[3] || ''}</textarea></td>
+                `;
+            } else if (tableIndex === 2) {
+                tr.innerHTML = `
+                    <td><input type="text" value="${data[0] || ''}" onchange="saveData()"></td>
+                    <td><input type="number" value="${data[1] || '0'}" min="0" onchange="saveData()"></td>
+                    <td><input type="number" value="${data[2] || '0'}" min="0" max="100" step="0.1" onchange="saveData()"></td>
+                    <td><textarea onchange="saveData()">${data[3] || ''}</textarea></td>
+                    <td><textarea onchange="saveData()">${data[4] || ''}</textarea></td>
+                `;
+            } else if (tableIndex === 3) {
+                tr.innerHTML = `
+                    <td><input type="text" value="${data[0] || ''}" onchange="saveData()"></td>
+                    <td><input type="text" value="${data[1] || ''}" onchange="saveData()"></td>
+                    <td><textarea onchange="saveData()">${data[2] || ''}</textarea></td>
+                    <td><input type="text" value="${data[3] || ''}" onchange="saveData()"></td>
+                    <td><textarea onchange="saveData()">${data[4] || ''}</textarea></td>
+                    <td><textarea onchange="saveData()">${data[5] || ''}</textarea></td>
+                `;
+            } else if (tableIndex === 4) {
+                tr.innerHTML = `
+                    <td><input type="text" value="${data[0] || ''}" onchange="saveData()"></td>
+                    <td><input type="text" value="${data[1] || ''}" onchange="saveData()"></td>
+                    <td><input type="date" value="${data[2] || ''}" onchange="saveData()"></td>
+                    <td><input type="date" value="${data[3] || ''}" onchange="saveData()"></td>
+                    <td><textarea onchange="saveData()">${data[4] || ''}</textarea></td>
+                    <td><input type="text" value="${data[5] || ''}" onchange="saveData()"></td>
+                    <td><textarea onchange="saveData()">${data[6] || ''}</textarea></td>
+                `;
+            }
+            
+            tbody.appendChild(tr);
+        }
+
+        // 添加空行
+        function addRow(tableIndex) {
+            const tbody = document.getElementById(`tbody${tableIndex}`);
+            const rowCount = tbody.rows.length;
+            const newRowData = [...templates[tableIndex][0]];
+            addRowWithData(tableIndex, newRowData, rowCount + 1);
+            saveData();
+        }
+
+        // 删除最后一行
+        function deleteLastRow(tableIndex) {
+            const tbody = document.getElementById(`tbody${tableIndex}`);
+            if (tbody.rows.length > 1) {
+                tbody.deleteRow(-1);
+                saveData();
+            } else {
+                alert('至少保留一行数据！');
+            }
+        }
+
+        // 切换标签页
+        function switchTab(index) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach((tab, i) => {
+                if (i === index) {
+                    tab.classList.add('active');
+                    contents[i].classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                    contents[i].classList.remove('active');
+                }
+            });
+        }
+
+        // 保存数据到本地存储
+        function saveData() {
+            const allData = {};
+            for (let i = 0; i < 5; i++) {
+                allData[i] = getTableData(i);
+            }
+            localStorage.setItem('mathErrorData', JSON.stringify(allData));
+            showMessage('数据已保存！');
+        }
+
+        // 加载数据
+        function loadData() {
+            const saved = localStorage.getItem('mathErrorData');
+            if (saved) {
+                const allData = JSON.parse(saved);
+                for (let i = 0; i < 5; i++) {
+                    if (allData[i] && allData[i].length > 0) {
+                        const tbody = document.getElementById(`tbody${i}`);
+                        tbody.innerHTML = '';
+                        allData[i].forEach((row, index) => {
+                            addRowWithData(i, row, index + 1);
+                        });
+                    }
+                }
+                // 重新应用筛选
+                applyFilter();
+            }
+        }
+
+        // 获取表格数据
+        function getTableData(tableIndex) {
+            const tbody = document.getElementById(`tbody${tableIndex}`);
+            const rows = tbody.querySelectorAll('tr');
+            const data = [];
+            
+            rows.forEach((row, index) => {
+                const rowData = [];
+                if (tableIndex === 0) {
+                    rowData.push(index + 1);
+                    
+                    // 处理第一行表格的特殊结构
+                    const cells = row.querySelectorAll('td');
+                    
+                    // 学生姓名
+                    const nameInput = cells[1].querySelector('input');
+                    rowData.push(nameInput ? nameInput.value : '');
+                    
+                    // 班级
+                    const classSelect = cells[2].querySelector('select');
+                    rowData.push(classSelect ? classSelect.value : '');
+                    
+                    // 知识点类别
+                    const knowledgeSelect = cells[3].querySelector('select');
+                    rowData.push(knowledgeSelect ? knowledgeSelect.value : '');
+                    
+                    // 具体题目/题型描述（文本输入部分）
+                    const questionContainer = cells[4].querySelector('div');
+                    const textInput = questionContainer ? questionContainer.querySelector('textarea') : null;
+                    rowData.push(textInput ? textInput.value : '');
+                    
+                    // 错误类型
+                    const errorTypeSelect = cells[5].querySelector('select');
+                    rowData.push(errorTypeSelect ? errorTypeSelect.value : '');
+                    
+                    // 班级出错人数
+                    const countInput = cells[6].querySelector('input');
+                    rowData.push(countInput ? countInput.value : '');
+                    
+                    // 错误原因分析
+                    const reasonTextarea = cells[7].querySelector('textarea');
+                    rowData.push(reasonTextarea ? reasonTextarea.value : '');
+                    
+                    // 纠错措施
+                    const correctionSelect = cells[8].querySelector('select');
+                    rowData.push(correctionSelect ? correctionSelect.value : '');
+                    
+                    // 纠错后掌握情况
+                    const masterySelect = cells[9].querySelector('select');
+                    rowData.push(masterySelect ? masterySelect.value : '');
+                    
+                    // 备注
+                    const remarkSelect = cells[10].querySelector('select');
+                    rowData.push(remarkSelect ? remarkSelect.value : '');
+                } else {
+                    const inputs = row.querySelectorAll('input, textarea');
+                    inputs.forEach(input => {
+                        rowData.push(input.value);
+                    });
+                }
+                data.push(rowData);
+            });
+            
+            return data;
+        }
+
+        // 导出为Excel
+        function exportToExcel() {
+            const wb = XLSX.utils.book_new();
+            
+            const sheetNames = ['易错题统计总表', '错误类型分类统计', '知识点易错统计', '学生个人错误档案', '纠错效果跟踪表'];
+            
+            for (let i = 0; i < 5; i++) {
+                const table = document.getElementById(`table${i}`);
+                const ws = XLSX.utils.table_to_sheet(table);
+                
+                // 设置列宽
+                const colWidths = [];
+                const firstRow = table.querySelector('thead tr');
+                firstRow.querySelectorAll('th').forEach(th => {
+                    colWidths.push({wch: 15});
+                });
+                ws['!cols'] = colWidths;
+                
+                XLSX.utils.book_append_sheet(wb, ws, sheetNames[i]);
+            }
+            
+            const date = new Date().toISOString().split('T')[0].replace(/-/g, '');
+            XLSX.writeFile(wb, `小学低段数学易错题统计表_${date}.xlsx`);
+            showMessage('Excel文件已导出！');
+        }
+
+        // 清空数据
+        function clearData(tableIndex) {
+            if (confirm('确定要清空该表格的所有数据吗？此操作不可恢复！')) {
+                const tbody = document.getElementById(`tbody${tableIndex}`);
+                tbody.innerHTML = '';
+                templates[tableIndex].forEach((row, index) => {
+                    addRowWithData(tableIndex, row, index + 1);
+                });
+                saveData();
+                showMessage('数据已清空！');
+            }
+        }
+
+        // 自动生成统计表格数据
+        function autoGenerateStats() {
+            // 获取易错题统计总表的数据
+            const mainTableData = getTableData(0);
+            
+            if (mainTableData.length === 0 || (mainTableData.length === 1 && mainTableData[0].every(cell => cell === ''))) {
+                showMessage('易错题统计总表暂无数据，无法生成统计信息');
+                return;
+            }
+            
+            // 生成错误类型统计表数据
+            generateErrorTypeStats(mainTableData);
+            
+            // 生成知识点统计表数据
+            generateKnowledgePointStats(mainTableData);
+            
+            // 生成学生错误档案数据
+            generateStudentErrorArchive(mainTableData);
+            
+            saveData();
+            showMessage('统计表格数据已自动生成！');
+        }
+        
+        // 生成错误类型统计表数据
+        function generateErrorTypeStats(mainTableData) {
+            // 统计各种错误类型出现次数
+            const errorTypeCount = {};
+            let totalErrors = 0;
+            
+            mainTableData.forEach(row => {
+                if (row.length > 5) {
+                    const errorType = row[5]; // 错误类型
+                    const errorCount = parseInt(row[6]) || 0; // 班级出错人数
+                    
+                    if (errorType && errorType.trim() !== '') {
+                        errorTypeCount[errorType] = (errorTypeCount[errorType] || 0) + errorCount;
+                        totalErrors += errorCount;
+                    }
+                }
+            });
+            
+            // 更新错误类型统计表
+            const errorTypeTbody = document.getElementById('tbody1');
+            errorTypeTbody.innerHTML = '';
+            
+            // 添加统计结果
+            for (const [errorType, count] of Object.entries(errorTypeCount)) {
+                const percentage = totalErrors > 0 ? ((count / totalErrors) * 100).toFixed(1) : '0.0';
+                const newRow = ['', '', '', ''];
+                newRow[0] = errorType;
+                newRow[1] = count.toString();
+                newRow[2] = percentage;
+                addRowWithData(1, newRow, errorTypeTbody.rows.length + 1);
+            }
+            
+            // 如果没有数据，添加空行
+            if (Object.keys(errorTypeCount).length === 0) {
+                templates[1].forEach((row, index) => {
+                    addRowWithData(1, row, index + 1);
+                });
+            }
+        }
+        
+        // 生成知识点统计表数据
+        function generateKnowledgePointStats(mainTableData) {
+            // 统计各个知识点的错误情况
+            const knowledgePointStats = {};
+            
+            mainTableData.forEach(row => {
+                if (row.length > 3) {
+                    const knowledgePoint = row[3]; // 知识点类别
+                    const errorCount = parseInt(row[6]) || 0; // 班级出错人数
+                    
+                    if (knowledgePoint && knowledgePoint.trim() !== '') {
+                        if (!knowledgePointStats[knowledgePoint]) {
+                            knowledgePointStats[knowledgePoint] = {
+                                errorStudents: 0,
+                                errorDetails: new Set(),
+                                suggestions: []
+                            };
+                        }
+                        knowledgePointStats[knowledgePoint].errorStudents += errorCount;
+                        knowledgePointStats[knowledgePoint].errorDetails.add(`${row[1] || '未知学生'}(${row[5] || '未知错误类型'})`);
+                    }
+                }
+            });
+            
+            // 更新知识点统计表
+            const knowledgePointTbody = document.getElementById('tbody2');
+            knowledgePointTbody.innerHTML = '';
+            
+            // 添加统计结果
+            for (const [knowledgePoint, stats] of Object.entries(knowledgePointStats)) {
+                const newRow = ['', '', '', '', ''];
+                newRow[0] = knowledgePoint;
+                newRow[1] = stats.errorStudents.toString();
+                newRow[2] = '0.0'; // 错误率需要根据班级总人数计算，这里暂时设为0.0
+                newRow[3] = Array.from(stats.errorDetails).join('；');
+                newRow[4] = `加强${knowledgePoint}相关练习`;
+                addRowWithData(2, newRow, knowledgePointTbody.rows.length + 1);
+            }
+            
+            // 如果没有数据，添加空行
+            if (Object.keys(knowledgePointStats).length === 0) {
+                templates[2].forEach((row, index) => {
+                    addRowWithData(2, row, index + 1);
+                });
+            }
+        }
+        
+        // 生成学生错误档案数据
+        function generateStudentErrorArchive(mainTableData) {
+            // 按学生统计错误情况
+            const studentErrors = {};
+            
+            mainTableData.forEach(row => {
+                if (row.length > 3) {
+                    const studentName = row[1]; // 学生姓名
+                    const className = row[2]; // 班级
+                    const knowledgePoint = row[3]; // 知识点类别
+                    const errorType = row[5]; // 错误类型
+                    
+                    if (studentName && studentName.trim() !== '') {
+                        if (!studentErrors[studentName]) {
+                            studentErrors[studentName] = {
+                                className: className || '',
+                                weakPoints: new Set(),
+                                errorTypes: new Set(),
+                                strategies: [],
+                                tracking: ''
+                            };
+                        }
+                        
+                        if (knowledgePoint && knowledgePoint.trim() !== '') {
+                            studentErrors[studentName].weakPoints.add(knowledgePoint);
+                        }
+                        
+                        if (errorType && errorType.trim() !== '') {
+                            studentErrors[studentName].errorTypes.add(errorType);
+                        }
+                    }
+                }
+            });
+            
+            // 更新学生错误档案表
+            const studentArchiveTbody = document.getElementById('tbody3');
+            studentArchiveTbody.innerHTML = '';
+            
+            // 添加统计结果
+            for (const [studentName, stats] of Object.entries(studentErrors)) {
+                const newRow = ['', '', '', '', '', ''];
+                newRow[0] = studentName;
+                newRow[1] = stats.className;
+                newRow[2] = Array.from(stats.weakPoints).join('；');
+                newRow[3] = Array.from(stats.errorTypes).join('；');
+                newRow[4] = `针对${Array.from(stats.weakPoints).join('、')}进行专项练习`;
+                newRow[5] = '跟踪中';
+                addRowWithData(3, newRow, studentArchiveTbody.rows.length + 1);
+            }
+            
+            // 如果没有数据，添加空行
+            if (Object.keys(studentErrors).length === 0) {
+                templates[3].forEach((row, index) => {
+                    addRowWithData(3, row, index + 1);
+                });
+            }
+        }
+        
+        // 修改保存数据函数，在保存易错题统计总表后自动生成其他表格
+        const originalSaveData = saveData;
+        saveData = function() {
+            originalSaveData();
+            
+            // 如果当前在易错题统计总表页面，自动生成统计表格
+            const activeTab = document.querySelector('.tab-content.active');
+            if (activeTab && activeTab.id === 'tab0') {
+                setTimeout(autoGenerateStats, 100);
+            }
+        };
+        
+        // 添加一个手动触发自动生成的按钮函数
+        function triggerAutoGenerate() {
+            autoGenerateStats();
+        }
+        
+        // 显示消息
+        function showMessage(msg) {
+            const div = document.createElement('div');
+            div.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 8px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                z-index: 10000;
+                animation: slideIn 0.3s;
+            `;
+            div.textContent = msg;
+            document.body.appendChild(div);
+            
+            setTimeout(() => {
+                div.style.animation = 'slideOut 0.3s';
+                setTimeout(() => div.remove(), 300);
+            }, 2000);
+        }
+
+        // 班级筛选
+        function filterByClass() {
+            const classValue = document.getElementById('classFilter').value;
+            filterConditions.class = classValue;
+            applyFilter();
+        }
+
+        // 学生筛选
+        function filterByStudent() {
+            const studentValue = document.getElementById('studentFilter').value;
+            filterConditions.student = studentValue;
+            applyFilter();
+        }
+
+        // 应用筛选
+        function applyFilter() {
+            const tbody = document.getElementById('tbody3');
+            const rows = tbody.querySelectorAll('tr');
+            
+            rows.forEach(row => {
+                const classCell = row.cells[1]; // 班级列
+                const studentCell = row.cells[0]; // 学生姓名列
+                
+                const classText = classCell ? classCell.textContent || classCell.innerText : '';
+                const studentText = studentCell ? studentCell.textContent || studentCell.innerText : '';
+                
+                const classMatch = !filterConditions.class || classText.includes(filterConditions.class);
+                const studentMatch = !filterConditions.student || studentText.includes(filterConditions.student);
+                
+                row.style.display = classMatch && studentMatch ? '' : 'none';
+            });
+        }
+
+        // 自动统计功能
+        function calculateStats() {
+            // 从第一个表格统计错误类型
+            const mainData = getTableData(0);
+            const errorTypes = {};
+            
+            mainData.forEach(row => {
+                const errorType = row[6]; // 错误类型列
+                const count = parseInt(row[7]) || 0; // 出错次数列
+                if (errorType && errorType.trim()) {
+                    errorTypes[errorType] = (errorTypes[errorType] || 0) + count;
+                }
+            });
+            
+            showMessage('统计功能开发中，敬请期待！');
+        }
+
+        // 页面加载时初始化
+        window.onload = function() {
+            for (let i = 0; i < 5; i++) {
+                initTable(i);
+            }
+            showMessage('欢迎使用易错题统计表！');
+        };
+
+        // 添加动画样式
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // 类似题目生成功能
+        // 题目生成规则库
+        const questionTemplates = {
+            '100以内加减法': {
+                '计算错误': [
+                    '{num1} + {num2} = ?',
+                    '{num3} - {num4} = ?',
+                    '{num1} + {num2} + {num5} = ?',
+                    '{num3} - {num4} + {num1} = ?'
+                ],
+                '进位错误': [
+                    '计算：{num6} + {num7} = ? (注意进位)',
+                    '计算：{num8} + {num9} = ? (需要进位)',
+                    '填空：{num6} + ___ = {result1}'
+                ],
+                '退位错误': [
+                    '计算：{num10} - {num11} = ? (注意退位)',
+                    '计算：{num12} - {num13} = ? (需要退位)',
+                    '填空：{num10} - ___ = {result2}'
+                ]
+            },
+            '表内乘法': {
+                '计算错误': [
+                    '{num1} × {num2} = ?',
+                    '{num3} × {num4} = ?',
+                    '填空：{num1} × ___ = {result3}',
+                    '选择：{num2} × {num3} = (A) {wrong1} (B) {result4} (C) {wrong2}'
+                ],
+                '记忆性错误': [
+                    '背诵并计算：{num5} × {num6} = ?',
+                    '快速回答：{num7} × {num8} = ?',
+                    '连线题：将算式与正确答案连接'
+                ]
+            },
+            '表内除法': {
+                '计算错误': [
+                    '{num1} ÷ {num2} = ?',
+                    '{num3} ÷ {num4} = ?',
+                    '填空：___ ÷ {num2} = {result5}',
+                    '判断题：{num1} ÷ {num2} = {result5} (对/错)'
+                ],
+                '概念混淆': [
+                    '应用题：将{num1}个苹果平均分给{num2}个小朋友，每人分到几个？',
+                    '比较题：{num3} ÷ {num4} ___ {num5} ÷ {num6} (>, <, =)'
+                ]
+            },
+            '认识图形': {
+                '概念混淆': [
+                    '识别题：请在图中找出所有的{shape1}',
+                    '分类题：将以下图形按{feature1}分类',
+                    '判断题：{shape2}有{num1}条边 (对/错)'
+                ],
+                '图形识别错误': [
+                    '选择题：以下哪个是{shape3}？',
+                    '画图题：请画出一个{shape4}',
+                    '数一数：图中有几个{shape5}？'
+                ]
+            }
+        };
+        
+        // 常用数字和图形库
+        const numberPool = [5, 8, 9, 12, 15, 18, 21, 24, 27, 32, 36, 42, 48, 54, 63, 72, 81];
+        const shapePool = ['正方形', '长方形', '三角形', '圆形', '平行四边形', '梯形'];
+        
+        // 加载错题筛选选项
+        function loadErrorQuestions() {
+            // 获取筛选条件
+            const topic = document.getElementById('errorTopicSelect').value;
+            const errorType = document.getElementById('errorTypeSelect').value;
+            
+            // 获取易错题数据
+            const errorData = getTableData(0); // 易错题统计总表
+            
+            // 筛选相关错题
+            const filteredQuestions = errorData.filter(row => {
+                const rowTopic = row[3] || ''; // 知识点类别
+                const rowErrorType = row[5] || ''; // 错误类型
+                return (!topic || rowTopic.includes(topic)) && 
+                       (!errorType || rowErrorType.includes(errorType));
+            });
+            
+            // 显示筛选结果
+            const listContainer = document.getElementById('errorQuestionsList');
+            if (filteredQuestions.length === 0) {
+                listContainer.innerHTML = '<p style="color: #666;">未找到相关错题</p>';
+                return;
+            }
+            
+            let html = '<h4 style="margin-bottom: 10px;">相关错题：</h4><ul style="list-style-type: decimal; padding-left: 20px;">';
+            filteredQuestions.forEach((row, index) => {
+                const studentName = row[1] || '';
+                const topic = row[3] || '';
+                const questionDesc = row[4] || '';
+                const errorType = row[5] || '';
+                html += `<li style="margin-bottom: 8px;">
+                    <strong>${studentName}</strong> - ${topic} - ${errorType}<br>
+                    <span style="color: #555;">题目描述：${questionDesc}</span>
+                </li>`;
+            });
+            html += '</ul>';
+            listContainer.innerHTML = html;
+        }
+        
+        // 生成类似题目
+        function generateSimilarQuestions() {
+            // 获取筛选条件
+            const topic = document.getElementById('errorTopicSelect').value;
+            const errorType = document.getElementById('errorTypeSelect').value;
+            
+            if (!topic || !errorType) {
+                showMessage('请先选择知识点和错误类型');
+                return;
+            }
+            
+            // 检查是否有对应的题目模板
+            if (!questionTemplates[topic] || !questionTemplates[topic][errorType]) {
+                showMessage('暂无该类型题目的生成模板');
+                return;
+            }
+            
+            // 获取题目模板
+            const templates = questionTemplates[topic][errorType];
+            const generatedList = document.getElementById('generatedQuestionsList');
+            
+            // 生成5道类似题目
+            let html = '<div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">';
+            html += '<h4 style="margin-bottom: 15px; color: #2c3e50;">生成的练习题目：</h4>';
+            html += '<ol style="padding-left: 20px;">';
+            
+            for (let i = 0; i < 5; i++) {
+                // 随机选择一个模板
+                const template = templates[Math.floor(Math.random() * templates.length)];
+                
+                // 随机选择数字和图形
+                const num1 = numberPool[Math.floor(Math.random() * numberPool.length)];
+                const num2 = numberPool[Math.floor(Math.random() * numberPool.length)];
+                const num3 = numberPool[Math.floor(Math.random() * numberPool.length)];
+                const num4 = numberPool[Math.floor(Math.random() * numberPool.length)];
+                const num5 = numberPool[Math.floor(Math.random() * numberPool.length)];
+                const num6 = numberPool[Math.floor(Math.random() * numberPool.length)] + 5;
+                const num7 = numberPool[Math.floor(Math.random() * numberPool.length)] + 6;
+                const num8 = numberPool[Math.floor(Math.random() * numberPool.length)] + 7;
+                const num9 = numberPool[Math.floor(Math.random() * numberPool.length)] + 8;
+                const num10 = numberPool[Math.floor(Math.random() * numberPool.length)] + 20;
+                const num11 = numberPool[Math.floor(Math.random() * numberPool.length)] + 10;
+                const num12 = numberPool[Math.floor(Math.random() * numberPool.length)] + 30;
+                const num13 = numberPool[Math.floor(Math.random() * numberPool.length)] + 15;
+                
+                const shape1 = shapePool[Math.floor(Math.random() * shapePool.length)];
+                const shape2 = shapePool[Math.floor(Math.random() * shapePool.length)];
+                const shape3 = shapePool[Math.floor(Math.random() * shapePool.length)];
+                const shape4 = shapePool[Math.floor(Math.random() * shapePool.length)];
+                const shape5 = shapePool[Math.floor(Math.random() * shapePool.length)];
+                
+                // 计算一些结果
+                const result1 = num6 + Math.floor(Math.random() * 10);
+                const result2 = num10 - Math.floor(Math.random() * 10);
+                const result3 = num1 * num2;
+                const result4 = num2 * num3;
+                const result5 = num1 / num2;
+                
+                const wrong1 = result4 + Math.floor(Math.random() * 5) + 1;
+                const wrong2 = Math.max(1, result4 - Math.floor(Math.random() * 5) - 1);
+                
+                // 替换模板中的占位符
+                let question = template
+                    .replace(/{num1}/g, num1)
+                    .replace(/{num2}/g, num2)
+                    .replace(/{num3}/g, num3)
+                    .replace(/{num4}/g, num4)
+                    .replace(/{num5}/g, num5)
+                    .replace(/{num6}/g, num6)
+                    .replace(/{num7}/g, num7)
+                    .replace(/{num8}/g, num8)
+                    .replace(/{num9}/g, num9)
+                    .replace(/{num10}/g, num10)
+                    .replace(/{num11}/g, num11)
+                    .replace(/{num12}/g, num12)
+                    .replace(/{num13}/g, num13)
+                    .replace(/{result1}/g, result1)
+                    .replace(/{result2}/g, result2)
+                    .replace(/{result3}/g, result3)
+                    .replace(/{result4}/g, result4)
+                    .replace(/{result5}/g, result5)
+                    .replace(/{wrong1}/g, wrong1)
+                    .replace(/{wrong2}/g, wrong2)
+                    .replace(/{shape1}/g, shape1)
+                    .replace(/{shape2}/g, shape2)
+                    .replace(/{shape3}/g, shape3)
+                    .replace(/{shape4}/g, shape4)
+                    .replace(/{shape5}/g, shape5)
+                    .replace(/{feature1}/g, '边数');
+                
+                html += `<li style="margin-bottom: 15px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+                    ${question}
+                </li>`;
+            }
+            
+            html += '</ol>';
+            html += '<div style="margin-top: 20px; text-align: center;">';
+            html += '<button onclick="generateSimilarQuestions()" style="padding: 10px 20px; background: #4facfe; color: white; border: none; border-radius: 5px; cursor: pointer;">🔄 重新生成</button>';
+            html += '</div></div>';
+            
+            generatedList.innerHTML = html;
+            showMessage('类似题目生成成功！');
+        }
+        
+        // 清空生成的题目
+        function clearGeneratedQuestions() {
+            document.getElementById('generatedQuestionsList').innerHTML = '';
+            document.getElementById('errorQuestionsList').innerHTML = '';
+            showMessage('已清空生成题目');
+        }
+        
+        // 初始化题目生成器选项
+        function initQuestionGenerator() {
+            // 填充知识点选项
+            const topicSelect = document.getElementById('errorTopicSelect');
+            dropdownOptions.knowledgePoints.forEach(point => {
+                const option = document.createElement('option');
+                option.value = point;
+                option.textContent = point;
+                topicSelect.appendChild(option);
+            });
+            
+            // 填充错误类型选项
+            const errorTypeSelect = document.getElementById('errorTypeSelect');
+            dropdownOptions.errorTypes.forEach(type => {
+                const option = document.createElement('option');
+                option.value = type;
+                option.textContent = type;
+                errorTypeSelect.appendChild(option);
+            });
+        }
+        
+        // 修改页面加载函数以包含新功能的初始化
+        const originalOnload = window.onload;
+        window.onload = function() {
+            if (originalOnload) originalOnload();
+            initQuestionGenerator();
+        };
+    </script>
+</body>
+</html>

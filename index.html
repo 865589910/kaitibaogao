@@ -100,11 +100,11 @@
 
         /* 目录卡片样式 */
         .menu-card {
-            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            background: linear-gradient(135deg, #fff8f0 0%, #ffe9d9 100%);
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-            border: 2px solid transparent;
+            box-shadow: 0 8px 25px rgba(255, 145, 77, 0.2);
+            border: 2px solid #ffd4b8;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             position: relative;
@@ -156,11 +156,11 @@
         }
 
         .branch-card {
-            background: linear-gradient(135deg, #fff 0%, #f0f4ff 100%);
+            background: linear-gradient(135deg, #fff5eb 0%, #ffe9d9 100%);
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border-left: 5px solid #667eea;
+            box-shadow: 0 4px 15px rgba(255, 145, 77, 0.15);
+            border-left: 5px solid #ff914d;
             cursor: pointer;
             transition: all 0.3s;
             position: relative;
@@ -169,8 +169,8 @@
 
         .branch-card:hover {
             transform: translateX(10px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
-            background: linear-gradient(135deg, #fff 0%, #e8f0ff 100%);
+            box-shadow: 0 8px 25px rgba(255, 145, 77, 0.3);
+            background: linear-gradient(135deg, #fff0e0 0%, #ffddc4 100%);
         }
 
         .branch-card h4 {
@@ -212,7 +212,7 @@
         .content {
             flex: 1;
             overflow-y: auto;
-            font-size: 20px;
+            font-size: 22px;
             line-height: 1.8;
             color: #333;
         }
@@ -235,37 +235,85 @@
         /* 按钮样式 */
         .nav-buttons {
             position: fixed;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 20px;
+            bottom: 30px;
+            left: 30px;
             z-index: 1000;
         }
 
         .nav-btn {
-            padding: 15px 35px;
+            width: 50px;
+            height: 50px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 50px;
-            font-size: 18px;
+            border-radius: 50%;
+            font-size: 20px;
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
             font-family: 'Microsoft YaHei';
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .nav-btn:hover {
-            transform: translateY(-3px);
+            transform: translateX(-5px);
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
         }
 
         .nav-btn:disabled {
-            background: #ccc;
+            opacity: 0.3;
             cursor: not-allowed;
             transform: none;
-            box-shadow: none;
+        }
+
+        .tool-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ff914d 0%, #ff6b35 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 145, 77, 0.4);
+            font-family: 'Microsoft YaHei';
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .tool-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 145, 77, 0.5);
+        }
+
+        /* 移动端适配 */
+        @media screen and (max-width: 768px) {
+            .tool-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+        }
+
+        /* 小屏幕适配 */
+        @media screen and (max-width: 480px) {
+            .tool-btn {
+                bottom: 15px;
+                right: 15px;
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
         }
 
         .home-btn {
@@ -339,27 +387,29 @@
         }
 
         .highlight-box {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #fff3e6 0%, #ffd9b8 100%);
             padding: 30px;
             border-radius: 15px;
             margin: 20px 0;
-            border-left: 6px solid #667eea;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-left: 6px solid #ff914d;
+            box-shadow: 0 4px 15px rgba(255, 145, 77, 0.15);
         }
 
         .card {
-            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            background: linear-gradient(135deg, #fff5eb 0%, #ffe4d6 100%);
             padding: 25px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 2px solid #e0e0e0;
+            box-shadow: 0 4px 15px rgba(255, 145, 77, 0.15);
+            border: 2px solid #ffd4b8;
             transition: transform 0.3s;
             -webkit-tap-highlight-color: transparent;
+            cursor: pointer;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 25px rgba(255, 145, 77, 0.3);
+            background: linear-gradient(135deg, #fff0e0 0%, #ffd9c4 100%);
         }
 
         .card h4 {
@@ -371,6 +421,7 @@
         .emphasis {
             color: #764ba2;
             font-weight: bold;
+            font-size: 1.15em;
         }
 
         .timeline {
@@ -405,6 +456,7 @@
 
         strong {
             color: #764ba2;
+            font-size: 1.1em;
         }
 
         .progress-bar {
@@ -442,7 +494,7 @@
             }
 
             .content {
-                font-size: 16px;
+                font-size: 18px;
             }
 
             .three-column, .two-column {
@@ -480,12 +532,21 @@
 
             .nav-buttons {
                 bottom: 20px;
-                gap: 10px;
+                left: 20px;
             }
 
             .nav-btn {
-                padding: 12px 25px;
-                font-size: 16px;
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+
+            .tool-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
             }
 
             .home-btn {
@@ -538,7 +599,7 @@
             }
 
             .content {
-                font-size: 14px;
+                font-size: 16px;
             }
 
             .menu-card h4 {
@@ -550,8 +611,9 @@
             }
 
             .nav-btn {
-                padding: 10px 20px;
-                font-size: 14px;
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
             }
 
             .home-btn {
@@ -665,25 +727,26 @@
                 <div class="two-column">
                     <div class="card">
                         <h4>1. "立德树人"根本任务</h4>
-                        <p>数学教育超越知识传授，承担育人使命：</p>
+                        <p>数学教育不仅是知识传授，更是育人过程：</p>
                         <ul>
-                            <li>培养学生科学精神和理性思维</li>
-                            <li>将错误转化为"觉悟"的生命教育</li>
-                            <li>培养直面挫折的勇气和意志品质</li>
+                            <li><strong>培养科学精神</strong>——求真、求善、求美的数学品格</li>
+                            <li><strong>挖掘错误价值</strong>——将"错误"转化为"觉悟"的生命教育</li>
+                            <li><strong>锻造意志品质</strong>——直面挫折、坚韧不拔的求学态度</li>
                         </ul>
                     </div>
                     <div class="card">
                         <h4>2. 核心素养导向（2022版课标）</h4>
-                        <p>三个"会"：</p>
+                        <p><strong>从"知识本位"到"素养本位"的转变</strong></p>
                         <ul>
                             <li>会用数学的<span class="emphasis">眼光</span>观察现实世界</li>
                             <li>会用数学的<span class="emphasis">思维</span>思考现实世界</li>
                             <li>会用数学的<span class="emphasis">语言</span>表达现实世界</li>
                         </ul>
+                        <p style="margin-top: 15px; color: #764ba2;">错误是反映思维过程、暴露认知盲点的宝贵资源</p>
                     </div>
                 </div>
                 <div class="highlight-box">
-                    <strong>核心观点：</strong>学生的错误不是教学的"绊脚石"，而是培养核心素养、促进深度学习的宝贵资源！
+                    <strong>核心观点：</strong>学生的错误不是教学的"绊脚石"，而是培养核心素养、实现深度学习的宝贵资源！通过引导学生探究错误、理解原因，实现从知识修正到思维能力提升的飞跃。
                 </div>
             </div>
         </div>
@@ -694,61 +757,65 @@
                 <div class="three-column">
                     <div class="card">
                         <h4>❌ 问题一</h4>
-                        <h4>对错误的消极态度</h4>
+                        <h4>师生对错误的消极态度</h4>
+                        <p><strong>现象：</strong></p>
                         <ul>
-                            <li>错误=失败、污点</li>
+                            <li>视错误为失败、污点</li>
                             <li>学生害怕犯错、不敢发言</li>
-                            <li>课堂氛围过于严肃</li>
-                            <li>产生数学焦虑</li>
+                            <li>课堂氛围紧张、产生数学焦虑</li>
                         </ul>
                     </div>
                     <div class="card">
                         <h4>❌ 问题二</h4>
-                        <h4>教师纠错的局限性</h4>
+                        <h4>传统纠错方式的局限性</h4>
+                        <p><strong>表现：</strong></p>
                         <ul>
-                            <li>重结果、轻过程</li>
-                            <li>急于给出正确答案</li>
-                            <li>机械训练、反复强调</li>
-                            <li>忽视认知根源</li>
+                            <li>重结果轻过程——急于给出标准答案</li>
+                            <li>重训练轻思考——机械重复、反复强调</li>
+                            <li>重表象轻本质——忽视认知根源分析</li>
                         </ul>
                     </div>
                     <div class="card">
                         <h4>❌ 问题三</h4>
-                        <h4>学生悟错能力缺失</h4>
+                        <h4>学生"悟错"能力严重缺失</h4>
+                        <p><strong>困境：</strong></p>
                         <ul>
-                            <li>依赖教师纠错</li>
-                            <li>缺乏自我反思意识</li>
-                            <li>简单归因为"粗心"</li>
-                            <li>同样错误反复出现</li>
+                            <li>过度依赖教师和家长纠错</li>
+                            <li>缺乏主动反思和自我审视意识</li>
+                            <li>简单归因"粗心"，未挖掘深层原因</li>
+                            <li>同类错误一犯再犯，学习效率低</li>
                         </ul>
                     </div>
                 </div>
                 <div class="highlight-box">
-                    <strong>研究切入点：</strong>如何从"纠错"走向"悟错"，将错误转化为学生成长的阶梯？
+                    <strong>核心问题：</strong>如何培养学生的"悟错"能力？如何从被动的"被纠错"转变为主动的"悟错"？如何将错误转化为学生成长的阶梯？
                 </div>
             </div>
         </div>
 
         <div class="slide" data-slide="bg-3">
-            <h2>本课题研究的价值</h2>
+            <h2>本课题研究的价值与意义</h2>
             <div class="content">
                 <div class="two-column">
                     <div class="card">
                         <h4>💡 理论意义</h4>
+                        <p style="margin-bottom: 15px; color: #667eea;"><strong>丰富和深化错误资源化教学理论</strong></p>
                         <ul>
-                            <li>丰富小学数学错误资源化教学理论</li>
-                            <li>明确"悟错"能力的内涵与构成要素</li>
-                            <li>构建系统化的策略体系</li>
-                            <li>推动从"经验化"走向"科学化"</li>
+                            <li><strong>明确核心概念</strong>——界定"悟错"能力的内涵与构成要素</li>
+                            <li><strong>填补研究空白</strong>——聚焦小学低段，构建系统策略体系</li>
+                            <li><strong>提升理论层次</strong>——从经验总结走向科学研究</li>
+                            <li><strong>深化育人价值</strong>——挖掘错误资源的德育功能</li>
                         </ul>
                     </div>
                     <div class="card">
                         <h4>🎯 实践意义</h4>
+                        <p style="margin-bottom: 15px; color: #667eea;"><strong>为一线教学提供有效支持</strong></p>
                         <ul>
-                            <li>为一线教师提供可操作的教学策略</li>
-                            <li>提升课堂教学效率</li>
-                            <li>减轻学生学业负担</li>
-                            <li>促进学生核心素养全面发展</li>
+                            <li><strong>转变教学观念</strong>——树立正确的错误观、学生观</li>
+                            <li><strong>提供操作指南</strong>——形成可借鉴的策略与案例</li>
+                            <li><strong>提升教学质量</strong>——精准把握学情，因材施教</li>
+                            <li><strong>减负增效</strong>——减少机械重复，提高学习效率</li>
+                            <li><strong>发展核心素养</strong>——培养反思能力和终身学习能力</li>
                         </ul>
                     </div>
                 </div>
@@ -777,35 +844,39 @@
             <div class="content">
                 <div class="highlight-box">
                     <h4>从"错误资源化"到"化错教育" —— "容-融-荣"三阶段</h4>
+                    <p style="font-size: 18px; margin-top: 10px; color: #555;">"把课堂教学中的差错融化为一种教学资源，相机融入后续教学过程，教学生学，'化腐朽为神奇'，变'事故'为'故事'"</p>
                 </div>
                 <div class="three-column">
                     <div class="card">
                         <h4>第一阶段：容</h4>
-                        <p><strong>错是错，温暖地容</strong></p>
+                        <p style="font-size: 20px; color: #667eea; font-weight: bold; margin-bottom: 10px;">错是错，温暖地容</p>
                         <ul>
-                            <li>建立宽容、安全的课堂文化</li>
-                            <li>让学生敢于暴露错误</li>
-                            <li>认识到"错误是创造的开始"</li>
+                            <li><strong>建立容错文化</strong>——创设宽容、安全的课堂氛围</li>
+                            <li><strong>鼓励试错</strong>——让学生敢于暴露自己的错误</li>
+                            <li><strong>观念转变</strong>——"错误是创造的开始"</li>
                         </ul>
                     </div>
                     <div class="card">
                         <h4>第二阶段：融</h4>
-                        <p><strong>错不是错，智慧地融</strong></p>
+                        <p style="font-size: 20px; color: #667eea; font-weight: bold; margin-bottom: 10px;">错不是错，智慧地融</p>
                         <ul>
-                            <li>将错误转化为教学资源</li>
-                            <li>引导学生深入分析成因</li>
-                            <li>让"正确在差错中生长"</li>
+                            <li><strong>资源化转化</strong>——将错误转化为教学资源</li>
+                            <li><strong>深度分析</strong>——引导学生探究错误成因</li>
+                            <li><strong>生长智慧</strong>——"正确在差错中生长"</li>
                         </ul>
                     </div>
                     <div class="card">
                         <h4>第三阶段：荣</h4>
-                        <p><strong>错还是错，自豪地荣</strong></p>
+                        <p style="font-size: 20px; color: #667eea; font-weight: bold; margin-bottom: 10px;">错还是错，自豪地荣</p>
                         <ul>
-                            <li>从错误中获得新启迪</li>
-                            <li>为有价值的错误鼓掌</li>
-                            <li>"错若化开，成长自来"</li>
+                            <li><strong>获得启迪</strong>——从错误中发现新的知识增长点</li>
+                            <li><strong>赞美价值</strong>——为有价值的错误鼓掌</li>
+                            <li><strong>成长自来</strong>——"错若化开，成长自来"</li>
                         </ul>
                     </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 20px;">
+                    <strong>理论价值：</strong>化错教育不仅是教学策略，更是教育哲学。它强调在"化错"过程中培养学生直面错误、超越错误的求真人格，将教学活动引向学生的心灵深处。
                 </div>
             </div>
         </div>
@@ -816,30 +887,33 @@
                 <div class="two-column">
                     <div class="card">
                         <h4>📖 "错误"与"错误资源"</h4>
-                        <p><strong>错误：</strong>学生认知过程中的偏差与失误，是思维真实状态的客观反映</p>
-                        <p><strong>错误资源：</strong>在师生互动中生成的、具有教学价值的动态课程资源</p>
+                        <p style="margin: 10px 0;"><strong>错误：</strong>学生在认知过程中出现的<span class="emphasis">偏差与失误</span>，是其<span class="emphasis">思维真实状态的客观反映</span>。</p>
+                        <p style="margin: 10px 0;"><strong>错误资源：</strong>在<span class="emphasis">师生互动中生成</span>的、具有教学价值的<span class="emphasis">动态课程资源</span>。</p>
                     </div>
                     <div class="card">
                         <h4>🎯 "错误资源化教学策略"</h4>
-                        <p>将学生错误转化为教学资源的系统化方法</p>
-                        <p><strong>核心环节：</strong>收集→分类→分析→反思→应用</p>
+                        <p style="margin: 10px 0;">将学生错误转化为教学资源的<span class="emphasis">系统化方法</span></p>
+                        <p style="margin: 15px 0;"><strong>核心环节：</strong></p>
+                        <p style="font-size: 19px; padding: 10px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); border-radius: 8px;">
+                            收集 → 分类 → 分析 → 反思 → 应用
+                        </p>
                     </div>
                 </div>
                 <div class="highlight-box" style="margin-top: 20px;">
-                    <h4>⭐ "悟错"能力 —— 本课题的核心</h4>
-                    <p style="font-size: 22px; margin: 15px 0;"><strong>定义：</strong>学生对错误的反思、分析与自我修正能力</p>
+                    <h4 style="font-size: 26px; margin-bottom: 15px;">⭐ "悟错"能力 —— 本课题的核心</h4>
+                    <p style="font-size: 22px; margin: 15px 0;"><strong>定义：</strong>学生对错误的<span class="emphasis">反思、分析与自我修正能力</span></p>
                     <div class="three-column" style="margin-top: 20px;">
                         <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
-                            <h4 style="color: #667eea; margin: 0;">反思意识</h4>
-                            <p style="font-size: 18px;">主动审视错误的意愿和态度</p>
+                            <h4 style="color: #667eea; margin: 0 0 10px 0; font-size: 20px;">反思意识</h4>
+                            <p style="font-size: 17px;">主动审视错误的意愿和态度</p>
                         </div>
                         <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
-                            <h4 style="color: #667eea; margin: 0;">分析能力</h4>
-                            <p style="font-size: 18px;">深入剖析错误成因的能力</p>
+                            <h4 style="color: #667eea; margin: 0 0 10px 0; font-size: 20px;">分析能力</h4>
+                            <p style="font-size: 17px;">深入剖析错误成因的能力</p>
                         </div>
                         <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
-                            <h4 style="color: #667eea; margin: 0;">自我修正能力</h4>
-                            <p style="font-size: 18px;">独立修正并避免重犯的能力</p>
+                            <h4 style="color: #667eea; margin: 0 0 10px 0; font-size: 20px;">自我修正能力</h4>
+                            <p style="font-size: 17px;">独立修正并避免重犯的能力</p>
                         </div>
                     </div>
                 </div>
@@ -867,21 +941,24 @@
             <h2>研究目标</h2>
             <div class="content">
                 <div class="highlight-box">
-                    <h4>总体目标</h4>
-                    <p style="font-size: 24px;">构建小学低段数学<span class="emphasis">"从纠错到悟错"</span>的教学策略体系</p>
+                    <h4 style="font-size: 26px;">总体目标</h4>
+                    <p style="font-size: 24px; margin-top: 10px;">构建小学低段数学<span class="emphasis">"从纠错到悟错"</span>的教学策略体系，<br>促进学生数学核心素养和终身学习能力的发展</p>
                 </div>
                 <div class="three-column">
                     <div class="card">
-                        <h4>具体目标1</h4>
-                        <p>探索并总结有效提升学生"悟错"能力的具体教学方法</p>
+                        <h4>具体目标 1</h4>
+                        <p style="font-size: 19px; line-height: 1.8;"><strong>探索有效方法</strong></p>
+                        <p>探索并总结有效提升学生"悟错"能力的具体教学方法，形成可操作的策略体系</p>
                     </div>
                     <div class="card">
-                        <h4>具体目标2</h4>
-                        <p>形成一套可供借鉴的"错误资源化"教学流程与案例</p>
+                        <h4>具体目标 2</h4>
+                        <p style="font-size: 19px; line-height: 1.8;"><strong>形成实践案例</strong></p>
+                        <p>形成一套可供借鉴的"错误资源化"教学流程与典型案例，为一线教师提供实践指南</p>
                     </div>
                     <div class="card">
-                        <h4>具体目标3</h4>
-                        <p>提升教师自身的教学反思与专业发展能力</p>
+                        <h4>具体目标 3</h4>
+                        <p style="font-size: 19px; line-height: 1.8;"><strong>促进教师成长</strong></p>
+                        <p>提升教师自身的教学反思与专业发展能力，促进从经验型向研究型教师转变</p>
                     </div>
                 </div>
             </div>
@@ -893,32 +970,50 @@
                 <div class="two-column">
                     <div class="card">
                         <h4>内容一</h4>
-                        <p><strong>小学低段学生数学常见错误的类型与成因分析</strong></p>
+                        <p style="font-size: 20px; margin-bottom: 10px;"><strong>小学低段数学常见错误的类型与成因分析</strong></p>
+                        <p style="margin: 10px 0; color: #666;">按知识点分类：</p>
                         <ul>
-                            <li>按知识点分类（计算、概念、应用题等）</li>
-                            <li>按性质分类（知识性、方法性、心理性等）</li>
-                            <li>深入分析认知根源</li>
+                            <li>计算类错误（加减乘除、进位退位等）</li>
+                            <li>概念类错误（图形认知、数的比较等）</li>
+                            <li>应用题错误（审题、分析、列式等）</li>
+                        </ul>
+                        <p style="margin: 10px 0; color: #666;">按性质分类：</p>
+                        <ul>
+                            <li>知识性错误、方法性错误、心理性错误</li>
                         </ul>
                     </div>
                     <div class="card">
                         <h4>内容二</h4>
-                        <p><strong>"从纠错到悟错"教学策略的设计与实践</strong></p>
-                        <ul>
-                            <li>创设"容错"课堂氛围</li>
-                            <li>引导学生"识错"</li>
-                            <li>组织学生"思错"</li>
-                            <li>指导学生"纠错"</li>
-                            <li>引领学生"用错"</li>
-                        </ul>
+                        <p style="font-size: 20px; margin-bottom: 10px;"><strong>"从纠错到悟错"教学策略的设计与实践</strong></p>
+                        <div style="background: #f5f7fa; padding: 15px; border-radius: 8px; margin-top: 10px;">
+                            <p style="font-weight: bold; color: #667eea; margin-bottom: 8px;">五大策略：</p>
+                            <p style="line-height: 2;">1️⃣ 创设"容错"课堂氛围<br>
+                            2️⃣ 引导学生"识错"<br>
+                            3️⃣ 组织学生"思错"<br>
+                            4️⃣ 指导学生"纠错"<br>
+                            5️⃣ 引领学生"用错"</p>
+                        </div>
                     </div>
                 </div>
                 <div class="card" style="margin-top: 20px;">
                     <h4>内容三</h4>
-                    <p><strong>"悟错"能力提升效果的评价与反馈机制研究</strong></p>
-                    <ul>
-                        <li>过程性评价：观察记录、作品分析、访谈问卷</li>
-                        <li>终结性评价：学业成绩、"悟错"能力专项测试</li>
-                    </ul>
+                    <p style="font-size: 20px; margin-bottom: 10px;"><strong>"悟错"能力提升效果的评价与反馈机制研究</strong></p>
+                    <div class="two-column" style="margin-top: 10px;">
+                        <div>
+                            <p style="color: #667eea; font-weight: bold;">过程性评价：</p>
+                            <ul style="margin-top: 8px;">
+                                <li>课堂观察记录、作品分析</li>
+                                <li>访谈与问卷调查</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p style="color: #667eea; font-weight: bold;">终结性评价：</p>
+                            <ul style="margin-top: 8px;">
+                                <li>学业成绩比较分析</li>
+                                <li>"悟错"能力专项测试</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -945,24 +1040,24 @@
             <div class="content">
                 <div class="timeline">
                     <div class="timeline-item">
-                        <h4>策略一：创设"容错"课堂氛围，鼓励学生敢于犯错</h4>
-                        <p>设立"错误分享日"，传递"错误是学习的一部分"的观念，保护学生自尊心</p>
+                        <h4>策略一：创设"容错"课堂氛围 —— 鼓励学生敢于犯错</h4>
+                        <p><strong>具体做法：</strong>设立"错误分享日"，传递"错误是学习的一部分"的观念，保护学生自尊心，消除错误的耻辱感，营造安全、温暖的学习环境。</p>
                     </div>
                     <div class="timeline-item">
-                        <h4>策略二：引导学生"识错"，学会辨析错误类型</h4>
-                        <p>通过"错误辨析"活动，让学生学会区分知识性、方法性、习惯性错误</p>
+                        <h4>策略二：引导学生"识错" —— 学会辨析错误类型</h4>
+                        <p><strong>具体做法：</strong>通过"错误辨析"活动，教会学生区分知识性错误、方法性错误、习惯性错误，培养学生的元认知意识，为深入分析奠定基础。</p>
                     </div>
                     <div class="timeline-item">
-                        <h4>策略三：组织学生"思错"，深入分析错误成因</h4>
-                        <p>开展"小老师讲解"、使用思维导图等方式，引导学生探究错误的深层原因</p>
+                        <h4>策略三：组织学生"思错" —— 深入分析错误成因</h4>
+                        <p><strong>具体做法：</strong>开展"小老师讲解"活动，让犯错学生说出思维过程；使用思维导图梳理解题思路，找到思维的"断点"，引导学生从表象看到本质。</p>
                     </div>
                     <div class="timeline-item">
-                        <h4>策略四：指导学生"纠错"，掌握自我修正方法</h4>
-                        <p>鼓励多种纠错策略（重新审题、换方法、画图、验算等），形成独立修正能力</p>
+                        <h4>策略四：指导学生"纠错" —— 掌握自我修正方法</h4>
+                        <p><strong>具体做法：</strong>鼓励多种纠错策略（重新审题、换方法解题、画图辅助、验算等），强调纠错过程的规范性，让学生逐步摇脱对教师的依赖，形成独立有效的自我修正能力。</p>
                     </div>
                     <div class="timeline-item">
-                        <h4>策略五：引领学生"用错"，实现知识的迁移与创新</h4>
-                        <p>将错题进行变式、让学生根据错题编题，促进知识迁移和创新思维发展</p>
+                        <h4>策略五：引领学生"用错" —— 实现知识的迁移与创新</h4>
+                        <p><strong>具体做法：</strong>将错题进行变式设计，让学生根据错题编题去"考验"同学，引导学生思考错误在生活中的类似例子，促进知识迁移和创新思维发展。</p>
                     </div>
                 </div>
             </div>
@@ -1021,21 +1116,25 @@
                 <div class="two-column">
                     <div class="card">
                         <h4>📚 文献研究法</h4>
-                        <p>系统查阅相关文献，为研究提供理论基础和方向指引</p>
+                        <p style="margin-bottom: 10px;"><strong>目的：</strong>系统梳理相关领域研究现状</p>
+                        <p>通过中国知网、万方数据等数据库，广泛查阅错误资源化教学、建构主义、元认知等相关文献，为研究提供坚实的理论基础。</p>
                     </div>
                     <div class="card">
                         <h4>🔄 行动研究法</h4>
-                        <p>通过"计划-行动-观察-反思"循环，持续改进教学策略</p>
+                        <p style="margin-bottom: 10px;"><strong>核心方法：</strong>"计划-行动-观察-反思"循环</p>
+                        <p>在真实教学情境中持续实践、检验、修正和完善教学策略，认真记录研究数据，确保研究的科学性和有效性。</p>
                     </div>
                 </div>
                 <div class="two-column" style="margin-top: 20px;">
                     <div class="card">
                         <h4>📋 案例研究法</h4>
-                        <p>收集典型教学案例，揭示教学规律，提供实践范例</p>
+                        <p style="margin-bottom: 10px;"><strong>特点：</strong>收集典型案例，揭示教学规律</p>
+                        <p>有意识地收集成功教学片段、代表性学生错误、有效"悟错"过程等案例，为其他教师提供直观、可借鉴的经验。</p>
                     </div>
                     <div class="card">
                         <h4>💬 访谈与问卷调查法</h4>
-                        <p>收集质性和量化数据，全面评估研究效果</p>
+                        <p style="margin-bottom: 10px;"><strong>作用：</strong>收集质性和量化数据</p>
+                        <p>设计访谈提纲和调查问卷，深入了解学生"悟错"过程中的真实想法和情感体验，量化评估能力提升情况。</p>
                     </div>
                 </div>
             </div>
@@ -1048,25 +1147,25 @@
                     <div class="timeline-item">
                         <h4>准备阶段（2025年9月-10月）</h4>
                         <ul>
-                            <li>文献资料收集与整理</li>
-                            <li>研究方案设计与论证</li>
-                            <li>研究工具（问卷、访谈提纲）的开发</li>
+                            <li><strong>文献资料收集与整理</strong>——系统查阅国内外相关文献，撰写文献综述</li>
+                            <li><strong>研究方案设计与论证</strong>——设计详细方案，邀请专家论证</li>
+                            <li><strong>研究工具开发</strong>——设计问卷、访谈提纲、观察记录表等，进行预测试</li>
                         </ul>
                     </div>
                     <div class="timeline-item">
                         <h4>实施阶段（2025年11月-2026年4月）</h4>
                         <ul>
-                            <li>第一轮行动研究：策略初步探索（重点："容错"与"识错"）</li>
-                            <li>第二轮行动研究：策略调整优化（重点："思错"与"纠错"）</li>
-                            <li>第三轮行动研究：策略深化完善（重点:"用错"与档案袋建立）</li>
+                            <li><strong>第一轮行动研究</strong>：策略初步探索（重点："容错"与"识错"）</li>
+                            <li><strong>第二轮行动研究</strong>：策略调整优化（重点："思错"与"纠错"）</li>
+                            <li><strong>第三轮行动研究</strong>：策略深化完善（重点:"用错"与档案袋建立）</li>
                         </ul>
                     </div>
                     <div class="timeline-item">
                         <h4>总结阶段（2026年5月-6月）</h4>
                         <ul>
-                            <li>数据整理与分析</li>
-                            <li>撰写研究报告与论文</li>
-                            <li>研究成果的提炼与推广</li>
+                            <li><strong>数据整理与分析</strong>——对课堂记录、作业、访谈、问卷等数据进行系统整理和分析</li>
+                            <li><strong>撰写研究报告与论文</strong>——撰写课题研究报告，提炼成果撰写教学论文</li>
+                            <li><strong>研究成果的提炼与推广</strong>——形成教学策略和案例集，在校内或区域内交流分享</li>
                         </ul>
                     </div>
                 </div>
@@ -1081,16 +1180,16 @@
                     <div class="card">
                         <h4>📝 理论成果</h4>
                         <ul>
-                            <li>形成《从"纠错"到"悟错"》研究报告</li>
-                            <li>撰写并发表1篇相关教学论文</li>
+                            <li><strong>研究报告</strong>——形成《从"纠错"到"悟错"》研究报告，系统阐述研究过程、结果和结论</li>
+                            <li><strong>教学论文</strong>——撰写并发表1篇相关教学论文，提炼核心发现和有效策略</li>
                         </ul>
                     </div>
                     <div class="card">
                         <h4>🎯 实践成果</h4>
                         <ul>
-                            <li>开发"从纠错到悟错"教学策略与案例集</li>
-                            <li>建立学生"悟错"成长档案袋</li>
-                            <li>显著提升学生的数学学习兴趣与"悟错"能力</li>
+                            <li><strong>教学策略与案例集</strong>——开发"从纠错到悟错"的系统化教学资源包</li>
+                            <li><strong>"悟错"成长档案袋</strong>——建立学生"悟错"成长档案袋模板和使用方法</li>
+                            <li><strong>能力显著提升</strong>——学生的数学学习兴趣和"悟错"能力得到明显增强</li>
                         </ul>
                     </div>
                 </div>
@@ -1098,11 +1197,11 @@
                 <div class="two-column">
                     <div class="card">
                         <h4>👥 人员保障</h4>
-                        <p>课题组成员具备扎实的学科知识和教育理论素养，对教学研究充满热情</p>
+                        <p style="line-height: 1.8;">课题组成员均为数学教育专业本科毕业生，<span class="emphasis">具备扎实的学科知识和教育理论素养</span，对教学研究充满热情，有强烈的意愿通过课题研究促进专业成长。</p>
                     </div>
                     <div class="card">
                         <h4>⏰ 时间保障</h4>
-                        <p>研究周期为一学年，时间充裕，将合理安排教学与研究工作</p>
+                        <p style="line-height: 1.8;">课题计划在<span class="emphasis">一个学年内完成，时间充裕</span>。将制定详细研究计划，合理安排教学与研究工作，积极争取学校领导支持，确保研究顺利进行。</p>
                     </div>
                 </div>
             </div>
@@ -1126,19 +1225,19 @@
             <div class="content">
                 <div class="highlight-box">
                     <h4>💡 创新点一：聚焦小学低段，构建系统化策略体系</h4>
-                    <p>现有研究多为宏观理念或零散案例，本研究针对小学低段学生认知特点，构建循序渐进、可操作的"五大策略"体系</p>
+                    <p style="font-size: 19px; line-height: 1.8;">现有研究多为宏观理念或零散案例，<strong>本研究针对小学低段学生认知特点</strong>，构建“容错-识错-思错-纠错-用错”循序渐进、可操作的五大策略体系，填补了相关研究空白。</p>
                 </div>
                 <div class="highlight-box">
                     <h4>💡 创新点二：明确"悟错"能力内涵，建立评价机制</h4>
-                    <p>清晰界定"悟错"能力的三个维度（反思意识、分析能力、自我修正能力），并探索科学的评价方法</p>
+                    <p style="font-size: 19px; line-height: 1.8;">有别于传统的"纠错能力"，<strong>本研究清晰界定"悟错"能力的三个维度</strong>（反思意识、分析能力、自我修正能力），并探索科学的评价方法，为后续研究提供理论基础。</p>
                 </div>
                 <div class="highlight-box">
                     <h4>💡 创新点三：从"纠错"到"悟错"的范式转变</h4>
-                    <p>不仅是教学技术的改进，更是教育理念的转变——从"教师纠错"到"学生悟错"，培养终身学习能力</p>
+                    <p style="font-size: 19px; line-height: 1.8;">不仅是教学技术的改进，<strong>更是教育理念的深刻转变</strong>——从"教师纠错"到"学生悟错"，从"被动接受"到"主动反思"，从"即时修正"到"终身学习能力"的培养。</p>
                 </div>
                 <div class="highlight-box">
                     <h4>🎯 核心优势：理论与实践深度融合</h4>
-                    <p>基于华应龙"化错教育"等先进理论，结合北师大版二年级数学教材，开发5个以上完整教学案例，真正实现"好用、管用"</p>
+                    <p style="font-size: 19px; line-height: 1.8;">基于华应龙"化错教育"等先进理论，<strong>结合北师大版二年级数学教材</strong>，开发5个以上完整教学案例，形成从理论到实践、从教师到学生的闭环，真正实现"好用、管用"。</p>
                 </div>
             </div>
         </div>
@@ -1155,36 +1254,36 @@
     </div>
 
     <button class="home-btn" id="homeBtn" onclick="goToMenu()" style="display: none;">🏠 返回目录</button>
-    <div class="slide-indicator" id="slideIndicator"></div>
     
     <div class="nav-buttons">
-        <button class="nav-btn" id="prevBtn" onclick="navigate('prev')">◀ 上一页</button>
-        <button class="nav-btn" id="nextBtn" onclick="navigate('next')">下一页 ▶</button>
+        <button class="nav-btn" id="prevBtn" onclick="navigate('prev'); event.stopPropagation();">◀</button>
     </div>
+    
+    <button class="tool-btn" id="toolBtn" onclick="openToolPage()" title="打开易错题统计表">📊</button>
 
     <script>
         const slideFlow = {
             'cover': { next: 'menu', prev: null },
             'menu': { next: null, prev: 'cover' },
-            'bg-menu': { next: null, prev: 'menu', parent: 'menu', slides: ['bg-1', 'bg-2', 'bg-3'] },
+            'bg-menu': { next: 'bg-1', prev: 'menu', parent: 'menu', slides: ['bg-1', 'bg-2', 'bg-3'] },
             'bg-1': { next: 'bg-2', prev: 'bg-menu', parent: 'bg-menu' },
             'bg-2': { next: 'bg-3', prev: 'bg-1', parent: 'bg-menu' },
-            'bg-3': { next: 'bg-menu', prev: 'bg-2', parent: 'bg-menu' },
-            'theory-menu': { next: null, prev: 'menu', parent: 'menu', slides: ['theory-1', 'theory-2'] },
+            'bg-3': { next: 'menu', prev: 'bg-2', parent: 'bg-menu' },
+            'theory-menu': { next: 'theory-1', prev: 'menu', parent: 'menu', slides: ['theory-1', 'theory-2'] },
             'theory-1': { next: 'theory-2', prev: 'theory-menu', parent: 'theory-menu' },
-            'theory-2': { next: 'theory-menu', prev: 'theory-1', parent: 'theory-menu' },
-            'design-menu': { next: null, prev: 'menu', parent: 'menu', slides: ['design-1', 'design-2'] },
+            'theory-2': { next: 'menu', prev: 'theory-1', parent: 'theory-menu' },
+            'design-menu': { next: 'design-1', prev: 'menu', parent: 'menu', slides: ['design-1', 'design-2'] },
             'design-1': { next: 'design-2', prev: 'design-menu', parent: 'design-menu' },
-            'design-2': { next: 'design-menu', prev: 'design-1', parent: 'design-menu' },
-            'strategy-menu': { next: null, prev: 'menu', parent: 'menu', slides: ['strategy-1', 'strategy-2'] },
+            'design-2': { next: 'menu', prev: 'design-1', parent: 'design-menu' },
+            'strategy-menu': { next: 'strategy-1', prev: 'menu', parent: 'menu', slides: ['strategy-1', 'strategy-2'] },
             'strategy-1': { next: 'strategy-2', prev: 'strategy-menu', parent: 'strategy-menu' },
-            'strategy-2': { next: 'strategy-menu', prev: 'strategy-1', parent: 'strategy-menu' },
-            'plan-menu': { next: null, prev: 'menu', parent: 'menu', slides: ['plan-1', 'plan-2', 'plan-3'] },
+            'strategy-2': { next: 'menu', prev: 'strategy-1', parent: 'strategy-menu' },
+            'plan-menu': { next: 'plan-1', prev: 'menu', parent: 'menu', slides: ['plan-1', 'plan-2', 'plan-3'] },
             'plan-1': { next: 'plan-2', prev: 'plan-menu', parent: 'plan-menu' },
             'plan-2': { next: 'plan-3', prev: 'plan-1', parent: 'plan-menu' },
-            'plan-3': { next: 'plan-menu', prev: 'plan-2', parent: 'plan-menu' },
-            'advantage-menu': { next: null, prev: 'menu', parent: 'menu', slides: ['advantage-1'] },
-            'advantage-1': { next: 'advantage-menu', prev: 'advantage-menu', parent: 'advantage-menu' },
+            'plan-3': { next: 'menu', prev: 'plan-2', parent: 'plan-menu' },
+            'advantage-menu': { next: 'advantage-1', prev: 'menu', parent: 'menu', slides: ['advantage-1'] },
+            'advantage-1': { next: 'menu', prev: 'advantage-menu', parent: 'advantage-menu' },
         };
 
         let currentSlide = 'cover';
@@ -1223,35 +1322,10 @@
             const flow = slideFlow[currentSlide];
             const homeBtn = document.getElementById('homeBtn');
             const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const indicator = document.getElementById('slideIndicator');
+            // const indicator = document.getElementById('slideIndicator'); // 已删除指示器
 
             // 显示/隐藏返回目录按钮
             homeBtn.style.display = (currentSlide !== 'cover' && currentSlide !== 'menu') ? 'block' : 'none';
-
-            // 更新导航按钮
-            prevBtn.disabled = !flow.prev;
-            nextBtn.disabled = !flow.next;
-
-            // 更新进度指示器
-            if (currentSlide === 'cover') {
-                indicator.textContent = '封面';
-            } else if (currentSlide === 'menu') {
-                indicator.textContent = '目录';
-            } else if (currentSlide.includes('-menu')) {
-                indicator.textContent = '分支选择';
-            } else {
-                indicator.textContent = '内容页';
-            }
-
-            // 检查是否完成某个分支的所有幻灯片
-            if (flow.parent && flow.slides) {
-                const allVisited = flow.slides.every(s => visitedSlides[s]);
-                if (allVisited && flow.next === null) {
-                    // 自动返回分支选择页
-                    setTimeout(() => showSlide(flow.parent), 500);
-                }
-            }
         }
 
         // 键盘导航
@@ -1259,6 +1333,15 @@
             if (e.key === 'ArrowRight') navigate('next');
             else if (e.key === 'ArrowLeft') navigate('prev');
             else if (e.key === 'Home' || e.key === 'h') goToMenu();
+        });
+        document.addEventListener('click', function(e) {
+            // 排除点击按钮、卡片等交互元素的情况
+            if (!e.target.closest('.nav-btn') && 
+                !e.target.closest('.home-btn') && 
+                !e.target.closest('.menu-card') && 
+                !e.target.closest('.branch-card')) {
+                navigate('next');
+            }
         });
 
         // 触摸滑动支持
@@ -1288,6 +1371,11 @@
 
         // 初始化
         updateUI();
+        
+        // 打开易错题统计表页面
+        function openToolPage() {
+            window.open('小学低段数学易错题统计表.html', '_blank');
+        }
     </script>
 </body>
 </html>
