@@ -17,6 +17,7 @@
             padding: 20px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            overflow-x: hidden;
         }
         
         .container {
@@ -26,6 +27,7 @@
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            contain: layout style paint;
         }
         
         h1 {
@@ -75,19 +77,21 @@
         }
         
         .tab {
-            padding: 12px 24px;
+            padding: 10px 20px;
             background-color: #f0f0f0;
             border: none;
             cursor: pointer;
-            font-size: 15px;
+            font-size: 14px;
             border-radius: 8px 8px 0 0;
-            transition: all 0.3s;
+            transition: all 0.2s;
             font-weight: 500;
+            white-space: nowrap;
         }
         
         .tab:hover {
             background-color: #e0e0e0;
-            transform: translateY(-2px);
+            transform: translateY(-1px);
+            transition: all 0.2s;
         }
         
         .tab.active {
@@ -98,7 +102,8 @@
         
         .tab-content {
             display: none;
-            animation: fadeIn 0.3s;
+            animation: fadeIn 0.2s ease-out;
+            contain: layout style;
         }
         
         @keyframes fadeIn {
@@ -108,6 +113,7 @@
         
         .tab-content.active {
             display: block;
+            contain: layout style;
         }
         
         table {
@@ -116,23 +122,26 @@
             margin-top: 20px;
             font-size: 18px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            contain: layout;
         }
         
         th {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 16px 12px;
+            padding: 14px 10px;
             text-align: center;
             font-weight: bold;
             border: 1px solid #ddd;
-            font-size: 18px;
+            font-size: 16px;
+            contain: layout style;
         }
         
         td {
-            padding: 14px;
+            padding: 12px;
             border: 1px solid #ddd;
             text-align: center;
-            font-size: 16px;
+            font-size: 14px;
+            contain: layout style;
         }
         
         tr:nth-child(even) {
@@ -150,11 +159,12 @@
         textarea,
         select {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             border: 2px solid #e0e0e0;
             border-radius: 5px;
-            font-size: 16px;
-            transition: border-color 0.3s;
+            font-size: 14px;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
         }
         
         input:focus, textarea:focus, select:focus {
@@ -177,7 +187,7 @@
         }
         
         button {
-            padding: 12px 24px;
+            padding: 10px 20px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
@@ -185,17 +195,19 @@
             cursor: pointer;
             font-size: 14px;
             font-weight: 500;
-            transition: all 0.3s;
+            transition: all 0.2s;
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
         
         button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         
         button:active {
             transform: translateY(0);
+            transition: transform 0.1s;
         }
         
         .btn-secondary {
@@ -461,28 +473,10 @@
                 ['', '', '', '', '', '', '', '', '', '', '']
             ],
             1: [ // 错误类型分类统计
-                ['计算错误', '0', '0', '进位、退位错误；运算符号看错等'],
-                ['概念混淆', '0', '0', '图形特征混淆；单位换算错误等'],
-                ['审题不清', '0', '0', '题目要求理解错误；遗漏条件等'],
-                ['记忆性错误', '0', '0', '乘法口诀记不住；公式记错等'],
-                ['粗心大意', '0', '0', '抄写错误；看错数字等'],
-                ['逻辑推理错误', '0', '0', '应用题分析错误；数量关系理解错误等'],
-                ['数位混淆', '0', '0', '数字位置写错；数位概念不清等'],
-                ['运算顺序错误', '0', '0', '混合运算顺序错误；括号使用错误等'],
-                ['单位换算错误', '0', '0', '长度、重量、时间单位换算错误等'],
-                ['图形识别错误', '0', '0', '平面图形与立体图形混淆等']
+                ['', '', '', '']
             ],
             2: [ // 知识点易错统计
-                ['100以内加减法', '0', '0', '', ''],
-                ['表内乘法', '0', '0', '', ''],
-                ['表内除法', '0', '0', '', ''],
-                ['认识图形', '0', '0', '', ''],
-                ['长度单位', '0', '0', '', ''],
-                ['时间认识', '0', '0', '', ''],
-                ['解决问题', '0', '0', '', ''],
-                ['万以内数的认识', '0', '0', '', ''],
-                ['有余数的除法', '0', '0', '', ''],
-                ['时分秒', '0', '0', '', '']
+                ['', '', '', '', '']
             ],
             3: [ // 学生个人错误档案
                 ['', '', '', '', '', '']
@@ -520,29 +514,18 @@
             student: ''
         };
 
-        // 示例数据
-        const sampleData = {
-            0: [
-                ['1', '张三', '二(1)班', '100以内加减法', '45+28=63(写成73)', '计算错误', '3', '进位加法不熟练，忘记进位', '强化进位练习，使用小棒演示', '基本掌握', '需持续关注'],
-                ['2', '李四', '二(1)班', '认识图形', '长方形与正方形混淆', '概念混淆', '2', '对图形特征理解不清', '通过实物对比教学，强化特征记忆', '已掌握', ''],
-                ['3', '王五', '二(2)班', '表内乘法', '7×8记不住', '记忆性错误', '5', '乘法口诀背诵不熟练', '趣味记忆法，编儿歌辅助记忆', '进步中', '家长配合练习'],
-                ['4', '赵六', '二(3)班', '100以内加减法', '64-27=47(写成37)', '退位错误', '4', '退位减法不熟练，忘记借位', '强化退位练习，使用计数器演示', '正在掌握', '需持续关注'],
-                ['5', '钱七', '二(2)班', '表内除法', '24÷4=5(写成5)', '计算错误', '3', '除法计算不熟练', '加强除法练习，使用分组演示', '基本掌握', ''],
-                ['6', '孙八', '二(4)班', '认识图形', '三角形与四边形混淆', '图形识别错误', '2', '对图形边数概念不清', '通过实物触摸认识图形特征', '正在掌握', ''],
-                ['7', '周九', '二(1)班', '100以内加减法', '38+45=73(写成83)', '进位错误', '3', '进位加法不熟练', '强化进位练习，使用小棒演示', '基本掌握', ''],
-                ['8', '吴十', '二(5)班', '表内乘法', '9×6=56(写成54)', '计算错误', '4', '乘法口诀记忆错误', '反复背诵乘法口诀', '掌握困难', '重点关注对象']
-            ]
-        };
+        // 示例数据（已移除）
+        const sampleData = {};
 
         // 初始化数据
         function initTable(tableIndex) {
             const tbody = document.getElementById(`tbody${tableIndex}`);
             tbody.innerHTML = '';
             
-            const data = sampleData[tableIndex] || templates[tableIndex];
-            data.forEach((row, index) => {
-                addRowWithData(tableIndex, row, index + 1);
-            });
+            // 只添加空行，不使用示例数据
+            for (let i = 0; i < 10; i++) {
+                addRow(tableIndex, i + 1);
+            }
             
             loadData();
         }
@@ -628,37 +611,47 @@
             const tbody = document.getElementById(`tbody${tableIndex}`);
             const tr = document.createElement('tr');
             
+            // 使用防抖避免频繁操作
+            let saveTimeout;
+            const debouncedSave = () => {
+                if (saveTimeout) clearTimeout(saveTimeout);
+                saveTimeout = setTimeout(() => {
+                    saveData();
+                    saveTimeout = null;
+                }, 300);
+            };
+            
             if (tableIndex === 0) {
                 // 班级下拉选择
-                const classSelect = createSelect(dropdownOptions.classes, data[2] || '', () => saveData());
+                const classSelect = createSelect(dropdownOptions.classes, data[2] || '', debouncedSave);
                 
                 // 知识点类别下拉选择
-                const knowledgeSelect = createSelect(dropdownOptions.knowledgePoints, data[3] || '', () => saveData());
+                const knowledgeSelect = createSelect(dropdownOptions.knowledgePoints, data[3] || '', debouncedSave);
                 
                 // 错误类型下拉选择
-                const errorTypeSelect = createSelect(dropdownOptions.errorTypes, data[5] || '', () => saveData());
+                const errorTypeSelect = createSelect(dropdownOptions.errorTypes, data[5] || '', debouncedSave);
                 
                 // 纠错措施下拉选择（可自定义）
-                const correctionSelect = createSelect(dropdownOptions.correctionMeasures, data[8] || '', () => saveData());
+                const correctionSelect = createSelect(dropdownOptions.correctionMeasures, data[8] || '', debouncedSave);
                 
                 // 掌握情况选择
-                const masterySelect = createSelect(dropdownOptions.masteryLevels, data[9] || '', () => saveData());
+                const masterySelect = createSelect(dropdownOptions.masteryLevels, data[9] || '', debouncedSave);
                 
                 // 备注选择
-                const remarkSelect = createSelect(dropdownOptions.remarks, data[10] || '', () => saveData());
+                const remarkSelect = createSelect(dropdownOptions.remarks, data[10] || '', debouncedSave);
                 
                 // 拍照上传
-                const uploadContainer = createFileUpload(() => saveData());
+                const uploadContainer = createFileUpload(debouncedSave);
                 
                 tr.innerHTML = `
                     <td>${rowNum}</td>
-                    <td><input type="text" value="${data[1] || ''}" onchange="saveData()"></td>
+                    <td><input type="text" value="${data[1] || ''}" oninput="debouncedSave()"></td>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><input type="number" value="${data[6] || '0'}" min="0" onchange="saveData()"></td>
-                    <td><textarea onchange="saveData()">${data[7] || ''}</textarea></td>
+                    <td><input type="number" value="${data[6] || '0'}" min="0" oninput="debouncedSave()"></td>
+                    <td><textarea oninput="debouncedSave()">${data[7] || ''}</textarea></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -678,7 +671,7 @@
                 
                 const textInput = document.createElement('textarea');
                 textInput.value = data[4] || '';
-                textInput.onchange = () => saveData();
+                textInput.oninput = debouncedSave;
                 textInput.style.width = '100%';
                 textInput.style.minHeight = '60px';
                 textInput.placeholder = '请输入题目描述或上传图片';
@@ -693,65 +686,81 @@
                 tds[10].appendChild(remarkSelect);
             } else if (tableIndex === 1) {
                 tr.innerHTML = `
-                    <td><input type="text" value="${data[0] || ''}" onchange="saveData()"></td>
-                    <td><input type="number" value="${data[1] || '0'}" min="0" onchange="saveData()"></td>
-                    <td><input type="number" value="${data[2] || '0'}" min="0" max="100" step="0.1" onchange="saveData()"></td>
-                    <td><textarea onchange="saveData()">${data[3] || ''}</textarea></td>
+                    <td><input type="text" value="${data[0] || ''}" oninput="debouncedSave()"></td>
+                    <td><input type="number" value="${data[1] || '0'}" min="0" oninput="debouncedSave()"></td>
+                    <td><input type="number" value="${data[2] || '0'}" min="0" max="100" step="0.1" oninput="debouncedSave()"></td>
+                    <td><textarea oninput="debouncedSave()">${data[3] || ''}</textarea></td>
                 `;
             } else if (tableIndex === 2) {
                 tr.innerHTML = `
-                    <td><input type="text" value="${data[0] || ''}" onchange="saveData()"></td>
-                    <td><input type="number" value="${data[1] || '0'}" min="0" onchange="saveData()"></td>
-                    <td><input type="number" value="${data[2] || '0'}" min="0" max="100" step="0.1" onchange="saveData()"></td>
-                    <td><textarea onchange="saveData()">${data[3] || ''}</textarea></td>
-                    <td><textarea onchange="saveData()">${data[4] || ''}</textarea></td>
+                    <td><input type="text" value="${data[0] || ''}" oninput="debouncedSave()"></td>
+                    <td><input type="number" value="${data[1] || '0'}" min="0" oninput="debouncedSave()"></td>
+                    <td><input type="number" value="${data[2] || '0'}" min="0" max="100" step="0.1" oninput="debouncedSave()"></td>
+                    <td><textarea oninput="debouncedSave()">${data[3] || ''}</textarea></td>
+                    <td><textarea oninput="debouncedSave()">${data[4] || ''}</textarea></td>
                 `;
             } else if (tableIndex === 3) {
                 tr.innerHTML = `
-                    <td><input type="text" value="${data[0] || ''}" onchange="saveData()"></td>
-                    <td><input type="text" value="${data[1] || ''}" onchange="saveData()"></td>
-                    <td><textarea onchange="saveData()">${data[2] || ''}</textarea></td>
-                    <td><input type="text" value="${data[3] || ''}" onchange="saveData()"></td>
-                    <td><textarea onchange="saveData()">${data[4] || ''}</textarea></td>
-                    <td><textarea onchange="saveData()">${data[5] || ''}</textarea></td>
+                    <td><input type="text" value="${data[0] || ''}" oninput="debouncedSave()"></td>
+                    <td><input type="text" value="${data[1] || ''}" oninput="debouncedSave()"></td>
+                    <td><textarea oninput="debouncedSave()">${data[2] || ''}</textarea></td>
+                    <td><input type="text" value="${data[3] || ''}" oninput="debouncedSave()"></td>
+                    <td><textarea oninput="debouncedSave()">${data[4] || ''}</textarea></td>
+                    <td><textarea oninput="debouncedSave()">${data[5] || ''}</textarea></td>
                 `;
             } else if (tableIndex === 4) {
                 tr.innerHTML = `
-                    <td><input type="text" value="${data[0] || ''}" onchange="saveData()"></td>
-                    <td><input type="text" value="${data[1] || ''}" onchange="saveData()"></td>
-                    <td><input type="date" value="${data[2] || ''}" onchange="saveData()"></td>
-                    <td><input type="date" value="${data[3] || ''}" onchange="saveData()"></td>
-                    <td><textarea onchange="saveData()">${data[4] || ''}</textarea></td>
-                    <td><input type="text" value="${data[5] || ''}" onchange="saveData()"></td>
-                    <td><textarea onchange="saveData()">${data[6] || ''}</textarea></td>
+                    <td><input type="text" value="${data[0] || ''}" oninput="debouncedSave()"></td>
+                    <td><input type="text" value="${data[1] || ''}" oninput="debouncedSave()"></td>
+                    <td><input type="date" value="${data[2] || ''}" oninput="debouncedSave()"></td>
+                    <td><input type="date" value="${data[3] || ''}" oninput="debouncedSave()"></td>
+                    <td><textarea oninput="debouncedSave()">${data[4] || ''}</textarea></td>
+                    <td><input type="text" value="${data[5] || ''}" oninput="debouncedSave()"></td>
+                    <td><textarea oninput="debouncedSave()">${data[6] || ''}</textarea></td>
                 `;
             }
             
             tbody.appendChild(tr);
         }
 
-        // 添加空行
+        // 优化添加行函数，减少DOM操作
         function addRow(tableIndex) {
             const tbody = document.getElementById(`tbody${tableIndex}`);
             const rowCount = tbody.rows.length;
             const newRowData = [...templates[tableIndex][0]];
             addRowWithData(tableIndex, newRowData, rowCount + 1);
-            saveData();
+            
+            // 防抖保存
+            if (window.addRowTimeout) clearTimeout(window.addRowTimeout);
+            window.addRowTimeout = setTimeout(() => {
+                saveData();
+                window.addRowTimeout = null;
+            }, 500);
         }
 
-        // 删除最后一行
+        // 优化删除行函数
         function deleteLastRow(tableIndex) {
             const tbody = document.getElementById(`tbody${tableIndex}`);
             if (tbody.rows.length > 1) {
                 tbody.deleteRow(-1);
-                saveData();
+                
+                // 防抖保存
+                if (window.deleteRowTimeout) clearTimeout(window.deleteRowTimeout);
+                window.deleteRowTimeout = setTimeout(() => {
+                    saveData();
+                    window.deleteRowTimeout = null;
+                }, 500);
             } else {
-                alert('至少保留一行数据！');
+                showMessage('至少保留一行数据！');
             }
         }
 
-        // 切换标签页
+        // 优化切换标签页函数
         function switchTab(index) {
+            // 防止频繁切换
+            if (window.switchingTab) return;
+            window.switchingTab = true;
+            
             const tabs = document.querySelectorAll('.tab');
             const contents = document.querySelectorAll('.tab-content');
             
@@ -764,16 +773,27 @@
                     contents[i].classList.remove('active');
                 }
             });
+            
+            // 延迟重置防止频繁切换
+            setTimeout(() => {
+                window.switchingTab = false;
+            }, 100);
         }
 
         // 保存数据到本地存储
+        let saveTimeout;
         function saveData() {
-            const allData = {};
-            for (let i = 0; i < 5; i++) {
-                allData[i] = getTableData(i);
-            }
-            localStorage.setItem('mathErrorData', JSON.stringify(allData));
-            showMessage('数据已保存！');
+            // 防抖处理，避免频繁保存
+            if (saveTimeout) clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => {
+                const allData = {};
+                for (let i = 0; i < 5; i++) {
+                    allData[i] = getTableData(i);
+                }
+                localStorage.setItem('mathErrorData', JSON.stringify(allData));
+                showMessage('数据已保存！');
+                saveTimeout = null;
+            }, 500);
         }
 
         // 加载数据
@@ -900,27 +920,46 @@
             }
         }
 
-        // 自动生成统计表格数据
+        // 优化自动生成统计功能
         function autoGenerateStats() {
-            // 获取易错题统计总表的数据
-            const mainTableData = getTableData(0);
-            
-            if (mainTableData.length === 0 || (mainTableData.length === 1 && mainTableData[0].every(cell => cell === ''))) {
-                showMessage('易错题统计总表暂无数据，无法生成统计信息');
+            // 防止重复点击
+            if (window.generatingStats) {
+                showMessage('正在生成中，请稍候...');
                 return;
             }
             
-            // 生成错误类型统计表数据
-            generateErrorTypeStats(mainTableData);
+            window.generatingStats = true;
             
-            // 生成知识点统计表数据
-            generateKnowledgePointStats(mainTableData);
-            
-            // 生成学生错误档案数据
-            generateStudentErrorArchive(mainTableData);
-            
-            saveData();
-            showMessage('统计表格数据已自动生成！');
+            // 延迟执行以避免阻塞UI
+            setTimeout(() => {
+                try {
+                    // 获取易错题统计总表的数据
+                    const mainTableData = getTableData(0);
+                    
+                    if (mainTableData.length === 0 || (mainTableData.length === 1 && mainTableData[0].every(cell => cell === ''))) {
+                        showMessage('易错题统计总表暂无数据，无法生成统计信息');
+                        window.generatingStats = false;
+                        return;
+                    }
+                    
+                    // 生成错误类型统计表数据
+                    generateErrorTypeStats(mainTableData);
+                    
+                    // 生成知识点统计表数据
+                    generateKnowledgePointStats(mainTableData);
+                    
+                    // 生成学生错误档案数据
+                    generateStudentErrorArchive(mainTableData);
+                    
+                    saveData();
+                    showMessage('统计表格数据已自动生成！');
+                } catch (error) {
+                    showMessage('生成统计信息时出错，请重试');
+                    console.error(error);
+                } finally {
+                    window.generatingStats = false;
+                }
+            }, 50);
         }
         
         // 生成错误类型统计表数据
@@ -957,9 +996,9 @@
             
             // 如果没有数据，添加空行
             if (Object.keys(errorTypeCount).length === 0) {
-                templates[1].forEach((row, index) => {
-                    addRowWithData(1, row, index + 1);
-                });
+                for (let i = 0; i < 5; i++) {
+                    addRow(1, i + 1);
+                }
             }
         }
         
@@ -1004,9 +1043,9 @@
             
             // 如果没有数据，添加空行
             if (Object.keys(knowledgePointStats).length === 0) {
-                templates[2].forEach((row, index) => {
-                    addRowWithData(2, row, index + 1);
-                });
+                for (let i = 0; i < 5; i++) {
+                    addRow(2, i + 1);
+                }
             }
         }
         
@@ -1062,9 +1101,9 @@
             
             // 如果没有数据，添加空行
             if (Object.keys(studentErrors).length === 0) {
-                templates[3].forEach((row, index) => {
-                    addRowWithData(3, row, index + 1);
-                });
+                for (let i = 0; i < 10; i++) {
+                    addRow(3, i + 1);
+                }
             }
         }
         
@@ -1073,10 +1112,16 @@
         saveData = function() {
             originalSaveData();
             
+            // 防止频繁触发自动生成
+            if (window.autoGenTimeout) clearTimeout(window.autoGenTimeout);
+            
             // 如果当前在易错题统计总表页面，自动生成统计表格
             const activeTab = document.querySelector('.tab-content.active');
             if (activeTab && activeTab.id === 'tab0') {
-                setTimeout(autoGenerateStats, 100);
+                window.autoGenTimeout = setTimeout(() => {
+                    autoGenerateStats();
+                    window.autoGenTimeout = null;
+                }, 1000);
             }
         };
         
@@ -1109,18 +1154,26 @@
             }, 2000);
         }
 
-        // 班级筛选
+        // 优化筛选功能，添加防抖
+        let filterTimeout;
         function filterByClass() {
-            const classValue = document.getElementById('classFilter').value;
-            filterConditions.class = classValue;
-            applyFilter();
+            if (filterTimeout) clearTimeout(filterTimeout);
+            filterTimeout = setTimeout(() => {
+                const classValue = document.getElementById('classFilter').value;
+                filterConditions.class = classValue;
+                applyFilter();
+                filterTimeout = null;
+            }, 200);
         }
 
-        // 学生筛选
         function filterByStudent() {
-            const studentValue = document.getElementById('studentFilter').value;
-            filterConditions.student = studentValue;
-            applyFilter();
+            if (filterTimeout) clearTimeout(filterTimeout);
+            filterTimeout = setTimeout(() => {
+                const studentValue = document.getElementById('studentFilter').value;
+                filterConditions.student = studentValue;
+                applyFilter();
+                filterTimeout = null;
+            }, 200);
         }
 
         // 应用筛选
@@ -1159,12 +1212,15 @@
             showMessage('统计功能开发中，敬请期待！');
         }
 
-        // 页面加载时初始化
+        // 优化页面加载时初始化
         window.onload = function() {
-            for (let i = 0; i < 5; i++) {
-                initTable(i);
-            }
-            showMessage('欢迎使用易错题统计表！');
+            // 延迟初始化以提升页面加载速度
+            setTimeout(() => {
+                for (let i = 0; i < 5; i++) {
+                    initTable(i);
+                }
+                showMessage('欢迎使用易错题统计表！');
+            }, 100);
         };
 
         // 添加动画样式
