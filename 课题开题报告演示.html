@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>从"纠错"到"悟错"：小学低段数学错误资源化教学策略的深度研究</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'SimHei', Arial, sans-serif;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .slides-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+            padding: 60px 80px;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* 背景样式 - 教育风格 */
+        .slide:not(.cover-slide) {
+            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(102, 126, 234, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(118, 75, 162, 0.05) 0%, transparent 50%),
+                linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+        }
+
+        /* 封面样式 */
+        .cover-slide {
+            background: 
+                linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="1200" height="800" fill="url(%23grid)"/></svg>');
+            color: white;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .cover-slide h1 {
+            font-size: 56px;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            line-height: 1.4;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .cover-slide .subtitle {
+            font-size: 32px;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .cover-slide .author-info {
+            font-size: 24px;
+            margin-top: 50px;
+            opacity: 0.9;
+            animation: fadeInUp 1.2s ease-out 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 目录卡片样式 */
+        .menu-card {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            border: 2px solid transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.25);
+            border-color: #667eea;
+        }
+
+        .menu-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .menu-card h4 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-card h4::before {
+            content: '📚';
+            font-size: 28px;
+        }
+
+        /* 分支选择页面样式 */
+        .branch-container {
+            display: grid;
+            gap: 25px;
+            padding: 20px 0;
+        }
+
+        .branch-card {
+            background: linear-gradient(135deg, #fff 0%, #f0f4ff 100%);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #667eea;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .branch-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            background: linear-gradient(135deg, #fff 0%, #e8f0ff 100%);
+        }
+
+        .branch-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .branch-card p {
+            color: #666;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* 标题样式 */
+        .slide h2 {
+            font-size: 46px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 40px;
+            border-bottom: 4px solid transparent;
+            border-image: linear-gradient(90deg, #667eea 0%, #764ba2 100%) 1;
+            padding-bottom: 15px;
+            position: relative;
+        }
+
+        .slide h2::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            font-size: 20px;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        /* 自定义滚动条 */
+        .content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 4px;
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+        }
+
+        /* 按钮样式 */
+        .nav-buttons {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            font-family: 'Microsoft YaHei';
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .home-btn {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #667eea;
+            border: 2px solid #667eea;
+            border-radius: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1000;
+            font-family: 'Microsoft YaHei';
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .home-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .slide-indicator {
+            position: fixed;
+            bottom: 40px;
+            left: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 18px;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .three-column {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .content ul li {
+            padding: 12px 0 12px 35px;
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .content ul li:before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-size: 16px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 6px solid #667eea;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .card {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 2px solid #e0e0e0;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .emphasis {
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        .timeline {
+            margin: 20px 0;
+            padding-left: 30px;
+            border-left: 3px solid #667eea;
+        }
+
+        .timeline-item {
+            margin-bottom: 30px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .timeline-item:before {
+            content: "";
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            position: absolute;
+            left: -10px;
+            top: 5px;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
+        }
+
+        .timeline-item h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+
+        strong {
+            color: #764ba2;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+            z-index: 1001;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="slides-container" id="slidesContainer">
+        <!-- 封面页 -->
+        <div class="slide active cover-slide" data-slide="cover">
+            <h1>从"纠错"到"悟错"<br>小学低段数学错误资源化<br>教学策略的深度研究</h1>
+            <div class="subtitle">课题开题报告</div>
+            <div class="author-info">
+                <p>研究者：刘建 曹悦</p>
+                <p>单位：锦龙小学</p>
+                <p>时间：2025年</p>
+            </div>
+        </div>
+
+        <!-- 主目录页 -->
+        <div class="slide" data-slide="menu">
+            <h2>📖 汇报目录</h2>
+            <div class="content">
+                <div class="three-column">
+                    <div class="menu-card" onclick="showBranch('bg')">
+                        <h4>一、研究背景</h4>
+                        <ul>
+                            <li>政策要求</li>
+                            <li>现实问题</li>
+                            <li>研究意义</li>
+                        </ul>
+                    </div>
+                    <div class="menu-card" onclick="showBranch('theory')">
+                        <h4>二、理论基础</h4>
+                        <ul>
+                            <li>文献综述</li>
+                            <li>核心概念</li>
+                            <li>理论支撑</li>
+                        </ul>
+                    </div>
+                    <div class="menu-card" onclick="showBranch('design')">
+                        <h4>三、研究设计</h4>
+                        <ul>
+                            <li>研究目标</li>
+                            <li>研究内容</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="three-column">
+                    <div class="menu-card" onclick="showBranch('strategy')">
+                        <h4>四、实施策略</h4>
+                        <ul>
+                            <li>五大策略</li>
+                            <li>理论依据</li>
+                        </ul>
+                    </div>
+                    <div class="menu-card" onclick="showBranch('plan')">
+                        <h4>五、研究计划</h4>
+                        <ul>
+                            <li>研究方法</li>
+                            <li>研究步骤</li>
+                            <li>预期成果</li>
+                        </ul>
+                    </div>
+                    <div class="menu-card" onclick="showBranch('advantage')">
+                        <h4>六、创新与优势</h4>
+                        <ul>
+                            <li>创新点</li>
+                            <li>核心优势</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分支选择页：研究背景 -->
+        <div class="slide" data-slide="bg-menu">
+            <h2>一、研究背景与意义</h2>
+            <div class="content">
+                <div class="branch-container">
+                    <div class="branch-card" onclick="showSlide('bg-1')">
+                        <h4>📌 政策与课程标准的宏观要求</h4>
+                        <p>"立德树人"根本任务 | 核心素养导向（2022版课标）</p>
+                    </div>
+                    <div class="branch-card" onclick="showSlide('bg-2')">
+                        <h4>📌 小学低段数学教学的现实问题</h4>
+                        <p>对错误的消极态度 | 教师纠错的局限性 | 学生悟错能力缺失</p>
+                    </div>
+                    <div class="branch-card" onclick="showSlide('bg-3')">
+                        <h4>📌 本课题研究的价值</h4>
+                        <p>理论意义 | 实践意义</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 研究背景-内容页 -->
+        <div class="slide" data-slide="bg-1">
+            <h2>政策与课程标准的宏观要求</h2>
+            <div class="content">
+                <div class="two-column">
+                    <div class="card">
+                        <h4>1. "立德树人"根本任务</h4>
+                        <p>数学教育超越知识传授，承担育人使命：</p>
+                        <ul>
+                            <li>培养学生科学精神和理性思维</li>
+                            <li>将错误转化为"觉悟"的生命教育</li>
+                            <li>培养直面挫折的勇气和意志品质</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>2. 核心素养导向（2022版课标）</h4>
+                        <p>三个"会"：</p>
+                        <ul>
+                            <li>会用数学的<span class="emphasis">眼光</span>观察现实世界</li>
+                            <li>会用数学的<span class="emphasis">思维</span>思考现实世界</li>
+                            <li>会用数学的<span class="emphasis">语言</span>表达现实世界</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight-box">
+                    <strong>核心观点：</strong>学生的错误不是教学的"绊脚石"，而是培养核心素养、促进深度学习的宝贵资源！
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" data-slide="bg-2">
+            <h2>小学低段数学教学的现实问题</h2>
+            <div class="content">
+                <div class="three-column">
+                    <div class="card">
+                        <h4>❌ 问题一</h4>
+                        <h4>对错误的消极态度</h4>
+                        <ul>
+                            <li>错误=失败、污点</li>
+                            <li>学生害怕犯错、不敢发言</li>
+                            <li>课堂氛围过于严肃</li>
+                            <li>产生数学焦虑</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>❌ 问题二</h4>
+                        <h4>教师纠错的局限性</h4>
+                        <ul>
+                            <li>重结果、轻过程</li>
+                            <li>急于给出正确答案</li>
+                            <li>机械训练、反复强调</li>
+                            <li>忽视认知根源</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>❌ 问题三</h4>
+                        <h4>学生悟错能力缺失</h4>
+                        <ul>
+                            <li>依赖教师纠错</li>
+                            <li>缺乏自我反思意识</li>
+                            <li>简单归因为"粗心"</li>
+                            <li>同样错误反复出现</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight-box">
+                    <strong>研究切入点：</strong>如何从"纠错"走向"悟错"，将错误转化为学生成长的阶梯？
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" data-slide="bg-3">
+            <h2>本课题研究的价值</h2>
+            <div class="content">
+                <div class="two-column">
+                    <div class="card">
+                        <h4>💡 理论意义</h4>
+                        <ul>
+                            <li>丰富小学数学错误资源化教学理论</li>
+                            <li>明确"悟错"能力的内涵与构成要素</li>
+                            <li>构建系统化的策略体系</li>
+                            <li>推动从"经验化"走向"科学化"</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>🎯 实践意义</h4>
+                        <ul>
+                            <li>为一线教师提供可操作的教学策略</li>
+                            <li>提升课堂教学效率</li>
+                            <li>减轻学生学业负担</li>
+                            <li>促进学生核心素养全面发展</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分支选择页：理论基础 -->
+        <div class="slide" data-slide="theory-menu">
+            <h2>二、理论基础</h2>
+            <div class="content">
+                <div class="branch-container">
+                    <div class="branch-card" onclick="showSlide('theory-1')">
+                        <h4>📌 国内外研究述评</h4>
+                        <p>华应龙"化错教学"理论 —— "容-融-荣"三阶段</p>
+                    </div>
+                    <div class="branch-card" onclick="showSlide('theory-2')">
+                        <h4>📌 核心概念界定</h4>
+                        <p>"错误"与"错误资源" | "错误资源化教学策略" | "悟错"能力</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" data-slide="theory-1">
+            <h2>华应龙"化错教学"理论</h2>
+            <div class="content">
+                <div class="highlight-box">
+                    <h4>从"错误资源化"到"化错教育" —— "容-融-荣"三阶段</h4>
+                </div>
+                <div class="three-column">
+                    <div class="card">
+                        <h4>第一阶段：容</h4>
+                        <p><strong>错是错，温暖地容</strong></p>
+                        <ul>
+                            <li>建立宽容、安全的课堂文化</li>
+                            <li>让学生敢于暴露错误</li>
+                            <li>认识到"错误是创造的开始"</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>第二阶段：融</h4>
+                        <p><strong>错不是错，智慧地融</strong></p>
+                        <ul>
+                            <li>将错误转化为教学资源</li>
+                            <li>引导学生深入分析成因</li>
+                            <li>让"正确在差错中生长"</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>第三阶段：荣</h4>
+                        <p><strong>错还是错，自豪地荣</strong></p>
+                        <ul>
+                            <li>从错误中获得新启迪</li>
+                            <li>为有价值的错误鼓掌</li>
+                            <li>"错若化开，成长自来"</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" data-slide="theory-2">
+            <h2>核心概念界定</h2>
+            <div class="content">
+                <div class="two-column">
+                    <div class="card">
+                        <h4>📖 "错误"与"错误资源"</h4>
+                        <p><strong>错误：</strong>学生认知过程中的偏差与失误，是思维真实状态的客观反映</p>
+                        <p><strong>错误资源：</strong>在师生互动中生成的、具有教学价值的动态课程资源</p>
+                    </div>
+                    <div class="card">
+                        <h4>🎯 "错误资源化教学策略"</h4>
+                        <p>将学生错误转化为教学资源的系统化方法</p>
+                        <p><strong>核心环节：</strong>收集→分类→分析→反思→应用</p>
+                    </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 20px;">
+                    <h4>⭐ "悟错"能力 —— 本课题的核心</h4>
+                    <p style="font-size: 22px; margin: 15px 0;"><strong>定义：</strong>学生对错误的反思、分析与自我修正能力</p>
+                    <div class="three-column" style="margin-top: 20px;">
+                        <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
+                            <h4 style="color: #667eea; margin: 0;">反思意识</h4>
+                            <p style="font-size: 18px;">主动审视错误的意愿和态度</p>
+                        </div>
+                        <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
+                            <h4 style="color: #667eea; margin: 0;">分析能力</h4>
+                            <p style="font-size: 18px;">深入剖析错误成因的能力</p>
+                        </div>
+                        <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
+                            <h4 style="color: #667eea; margin: 0;">自我修正能力</h4>
+                            <p style="font-size: 18px;">独立修正并避免重犯的能力</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分支选择页：研究设计 -->
+        <div class="slide" data-slide="design-menu">
+            <h2>三、研究设计</h2>
+            <div class="content">
+                <div class="branch-container">
+                    <div class="branch-card" onclick="showSlide('design-1')">
+                        <h4>📌 研究目标</h4>
+                        <p>总体目标 | 三个具体目标</p>
+                    </div>
+                    <div class="branch-card" onclick="showSlide('design-2')">
+                        <h4>📌 研究内容</h4>
+                        <p>错误类型与成因分析 | 教学策略设计与实践 | 评价与反馈机制</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" data-slide="design-1">
+            <h2>研究目标</h2>
+            <div class="content">
+                <div class="highlight-box">
+                    <h4>总体目标</h4>
+                    <p style="font-size: 24px;">构建小学低段数学<span class="emphasis">"从纠错到悟错"</span>的教学策略体系</p>
+                </div>
+                <div class="three-column">
+                    <div class="card">
+                        <h4>具体目标1</h4>
+                        <p>探索并总结有效提升学生"悟错"能力的具体教学方法</p>
+                    </div>
+                    <div class="card">
+                        <h4>具体目标2</h4>
+                        <p>形成一套可供借鉴的"错误资源化"教学流程与案例</p>
+                    </div>
+                    <div class="card">
+                        <h4>具体目标3</h4>
+                        <p>提升教师自身的教学反思与专业发展能力</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" data-slide="design-2">
+            <h2>研究内容</h2>
+            <div class="content">
+                <div class="two-column">
+                    <div class="card">
+                        <h4>内容一</h4>
+                        <p><strong>小学低段学生数学常见错误的类型与成因分析</strong></p>
+                        <ul>
+                            <li>按知识点分类（计算、概念、应用题等）</li>
+                            <li>按性质分类（知识性、方法性、心理性等）</li>
+                            <li>深入分析认知根源</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>内容二</h4>
+                        <p><strong>"从纠错到悟错"教学策略的设计与实践</strong></p>
+                        <ul>
+                            <li>创设"容错"课堂氛围</li>
+                            <li>引导学生"识错"</li>
+                            <li>组织学生"思错"</li>
+                            <li>指导学生"纠错"</li>
+                            <li>引领学生"用错"</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card" style="margin-top: 20px;">
+                    <h4>内容三</h4>
+                    <p><strong>"悟错"能力提升效果的评价与反馈机制研究</strong></p>
+                    <ul>
+                        <li>过程性评价：观察记录、作品分析、访谈问卷</li>
+                        <li>终结性评价：学业成绩、"悟错"能力专项测试</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分支选择页：实施策略 -->
+        <div class="slide" data-slide="strategy-menu">
+            <h2>四、实施策略</h2>
+            <div class="content">
+                <div class="branch-container">
+                    <div class="branch-card" onclick="showSlide('strategy-1')">
+                        <h4>📌 "从纠错到悟错"五大教学策略</h4>
+                        <p>容错 | 识错 | 思错 | 纠错 | 用错</p>
+                    </div>
+                    <div class="branch-card" onclick="showSlide('strategy-2')">
+                        <h4>📌 研究的理论依据</h4>
+                        <p>建构主义 | 元认知理论 | 最近发展区理论 | 化错教育理论</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" data-slide="strategy-1">
+            <h2>"从纠错到悟错"五大教学策略</h2>
+            <div class="content">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>策略一：创设"容错"课堂氛围，鼓励学生敢于犯错</h4>
+                        <p>设立"错误分享日"，传递"错误是学习的一部分"的观念，保护学生自尊心</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>策略二：引导学生"识错"，学会辨析错误类型</h4>
+                        <p>通过"错误辨析"活动，让学生学会区分知识性、方法性、习惯性错误</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>策略三：组织学生"思错"，深入分析错误成因</h4>
+                        <p>开展"小老师讲解"、使用思维导图等方式，引导学生探究错误的深层原因</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>策略四：指导学生"纠错"，掌握自我修正方法</h4>
+                        <p>鼓励多种纠错策略（重新审题、换方法、画图、验算等），形成独立修正能力</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>策略五：引领学生"用错"，实现知识的迁移与创新</h4>
+                        <p>将错题进行变式、让学生根据错题编题，促进知识迁移和创新思维发展</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" data-slide="strategy-2">
+            <h2>研究的理论依据</h2>
+            <div class="content">
+                <div class="two-column">
+                    <div class="card">
+                        <h4>🏗️ 建构主义学习理论</h4>
+                        <p>学生是意义的主动建构者，错误是认知冲突的表现，是建构新知识的契机</p>
+                    </div>
+                    <div class="card">
+                        <h4>🧠 元认知理论</h4>
+                        <p>"悟错"能力是元认知能力在数学学习中的体现，培养学生的自我监控和调节能力</p>
+                    </div>
+                </div>
+                <div class="two-column" style="margin-top: 20px;">
+                    <div class="card">
+                        <h4>📊 最近发展区理论</h4>
+                        <p>通过分析错误把握学生的最近发展区，提供恰当的"脚手架"支持</p>
+                    </div>
+                    <div class="card">
+                        <h4>✨ 华应龙"化错教育"理论</h4>
+                        <p>"容-融-荣"三阶段为本研究提供了系统性的实践框架</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分支选择页：研究计划 -->
+        <div class="slide" data-slide="plan-menu">
+            <h2>五、研究计划</h2>
+            <div class="content">
+                <div class="branch-container">
+                    <div class="branch-card" onclick="showSlide('plan-1')">
+                        <h4>📌 研究方法</h4>
+                        <p>文献研究法 | 行动研究法 | 案例研究法 | 访谈与问卷调查法</p>
+                    </div>
+                    <div class="branch-card" onclick="showSlide('plan-2')">
+                        <h4>📌 研究步骤</h4>
+                        <p>准备阶段 | 实施阶段 | 总结阶段</p>
+                    </div>
+                    <div class="branch-card" onclick="showSlide('plan-3')">
+                        <h4>📌 预期成果与保障条件</h4>
+                        <p>理论成果 | 实践成果 | 人员与时间保障</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" data-slide="plan-1">
+            <h2>研究方法</h2>
+            <div class="content">
+                <div class="two-column">
+                    <div class="card">
+                        <h4>📚 文献研究法</h4>
+                        <p>系统查阅相关文献，为研究提供理论基础和方向指引</p>
+                    </div>
+                    <div class="card">
+                        <h4>🔄 行动研究法</h4>
+                        <p>通过"计划-行动-观察-反思"循环，持续改进教学策略</p>
+                    </div>
+                </div>
+                <div class="two-column" style="margin-top: 20px;">
+                    <div class="card">
+                        <h4>📋 案例研究法</h4>
+                        <p>收集典型教学案例，揭示教学规律，提供实践范例</p>
+                    </div>
+                    <div class="card">
+                        <h4>💬 访谈与问卷调查法</h4>
+                        <p>收集质性和量化数据，全面评估研究效果</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" data-slide="plan-2">
+            <h2>研究步骤</h2>
+            <div class="content">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>准备阶段（2025年9月-10月）</h4>
+                        <ul>
+                            <li>文献资料收集与整理</li>
+                            <li>研究方案设计与论证</li>
+                            <li>研究工具（问卷、访谈提纲）的开发</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>实施阶段（2025年11月-2026年4月）</h4>
+                        <ul>
+                            <li>第一轮行动研究：策略初步探索（重点："容错"与"识错"）</li>
+                            <li>第二轮行动研究：策略调整优化（重点："思错"与"纠错"）</li>
+                            <li>第三轮行动研究：策略深化完善（重点:"用错"与档案袋建立）</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>总结阶段（2026年5月-6月）</h4>
+                        <ul>
+                            <li>数据整理与分析</li>
+                            <li>撰写研究报告与论文</li>
+                            <li>研究成果的提炼与推广</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" data-slide="plan-3">
+            <h2>预期成果与保障条件</h2>
+            <div class="content">
+                <h3 style="color: #667eea; font-size: 28px; margin-bottom: 20px;">预期成果</h3>
+                <div class="two-column">
+                    <div class="card">
+                        <h4>📝 理论成果</h4>
+                        <ul>
+                            <li>形成《从"纠错"到"悟错"》研究报告</li>
+                            <li>撰写并发表1篇相关教学论文</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>🎯 实践成果</h4>
+                        <ul>
+                            <li>开发"从纠错到悟错"教学策略与案例集</li>
+                            <li>建立学生"悟错"成长档案袋</li>
+                            <li>显著提升学生的数学学习兴趣与"悟错"能力</li>
+                        </ul>
+                    </div>
+                </div>
+                <h3 style="color: #667eea; font-size: 28px; margin: 30px 0 20px;">保障条件</h3>
+                <div class="two-column">
+                    <div class="card">
+                        <h4>👥 人员保障</h4>
+                        <p>课题组成员具备扎实的学科知识和教育理论素养，对教学研究充满热情</p>
+                    </div>
+                    <div class="card">
+                        <h4>⏰ 时间保障</h4>
+                        <p>研究周期为一学年，时间充裕，将合理安排教学与研究工作</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分支选择页：创新与优势 -->
+        <div class="slide" data-slide="advantage-menu">
+            <h2>六、创新点与优势</h2>
+            <div class="content">
+                <div class="branch-container">
+                    <div class="branch-card" onclick="showSlide('advantage-1')">
+                        <h4>📌 本课题的创新点与核心优势</h4>
+                        <p>三大创新点 | 理论与实践深度融合</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" data-slide="advantage-1">
+            <h2>本课题的创新点与优势</h2>
+            <div class="content">
+                <div class="highlight-box">
+                    <h4>💡 创新点一：聚焦小学低段，构建系统化策略体系</h4>
+                    <p>现有研究多为宏观理念或零散案例，本研究针对小学低段学生认知特点，构建循序渐进、可操作的"五大策略"体系</p>
+                </div>
+                <div class="highlight-box">
+                    <h4>💡 创新点二：明确"悟错"能力内涵，建立评价机制</h4>
+                    <p>清晰界定"悟错"能力的三个维度（反思意识、分析能力、自我修正能力），并探索科学的评价方法</p>
+                </div>
+                <div class="highlight-box">
+                    <h4>💡 创新点三：从"纠错"到"悟错"的范式转变</h4>
+                    <p>不仅是教学技术的改进，更是教育理念的转变——从"教师纠错"到"学生悟错"，培养终身学习能力</p>
+                </div>
+                <div class="highlight-box">
+                    <h4>🎯 核心优势：理论与实践深度融合</h4>
+                    <p>基于华应龙"化错教育"等先进理论，结合北师大版二年级数学教材，开发5个以上完整教学案例，真正实现"好用、管用"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 结束页 -->
+        <div class="slide cover-slide" data-slide="end">
+            <h1 style="font-size: 48px;">谢谢各位专家和老师！</h1>
+            <div class="subtitle" style="font-size: 32px; margin-top: 50px;">
+                <p>错若化开，成长自来</p>
+                <p style="margin-top: 20px; font-size: 28px;">让我们一起探索"从纠错到悟错"的教学新路径</p>
+                <p style="margin-top: 30px; font-size: 24px; opacity: 0.9;">敬请各位专家批评指正！</p>
+            </div>
+        </div>
+    </div>
+
+    <button class="home-btn" id="homeBtn" onclick="goToMenu()" style="display: none;">🏠 返回目录</button>
+    <div class="slide-indicator" id="slideIndicator"></div>
+    
+    <div class="nav-buttons">
+        <button class="nav-btn" id="prevBtn" onclick="navigate('prev')">◀ 上一页</button>
+        <button class="nav-btn" id="nextBtn" onclick="navigate('next')">下一页 ▶</button>
+    </div>
+
+    <script>
+        const slideFlow = {
+            'cover': { next: 'menu', prev: null },
+            'menu': { next: null, prev: 'cover' },
+            'bg-menu': { next: null, prev: 'menu', parent: 'menu', slides: ['bg-1', 'bg-2', 'bg-3'] },
+            'bg-1': { next: 'bg-2', prev: 'bg-menu', parent: 'bg-menu' },
+            'bg-2': { next: 'bg-3', prev: 'bg-1', parent: 'bg-menu' },
+            'bg-3': { next: 'bg-menu', prev: 'bg-2', parent: 'bg-menu' },
+            'theory-menu': { next: null, prev: 'menu', parent: 'menu', slides: ['theory-1', 'theory-2'] },
+            'theory-1': { next: 'theory-2', prev: 'theory-menu', parent: 'theory-menu' },
+            'theory-2': { next: 'theory-menu', prev: 'theory-1', parent: 'theory-menu' },
+            'design-menu': { next: null, prev: 'menu', parent: 'menu', slides: ['design-1', 'design-2'] },
+            'design-1': { next: 'design-2', prev: 'design-menu', parent: 'design-menu' },
+            'design-2': { next: 'design-menu', prev: 'design-1', parent: 'design-menu' },
+            'strategy-menu': { next: null, prev: 'menu', parent: 'menu', slides: ['strategy-1', 'strategy-2'] },
+            'strategy-1': { next: 'strategy-2', prev: 'strategy-menu', parent: 'strategy-menu' },
+            'strategy-2': { next: 'strategy-menu', prev: 'strategy-1', parent: 'strategy-menu' },
+            'plan-menu': { next: null, prev: 'menu', parent: 'menu', slides: ['plan-1', 'plan-2', 'plan-3'] },
+            'plan-1': { next: 'plan-2', prev: 'plan-menu', parent: 'plan-menu' },
+            'plan-2': { next: 'plan-3', prev: 'plan-1', parent: 'plan-menu' },
+            'plan-3': { next: 'plan-menu', prev: 'plan-2', parent: 'plan-menu' },
+            'advantage-menu': { next: null, prev: 'menu', parent: 'menu', slides: ['advantage-1'] },
+            'advantage-1': { next: 'advantage-menu', prev: 'advantage-menu', parent: 'advantage-menu' },
+        };
+
+        let currentSlide = 'cover';
+        let visitedSlides = {};
+
+        function showSlide(slideId) {
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            const slide = document.querySelector(`[data-slide="${slideId}"]`);
+            if (slide) {
+                slide.classList.add('active');
+                currentSlide = slideId;
+                updateUI();
+                visitedSlides[slideId] = true;
+            }
+        }
+
+        function showBranch(branch) {
+            showSlide(branch + '-menu');
+        }
+
+        function navigate(direction) {
+            const flow = slideFlow[currentSlide];
+            if (!flow) return;
+
+            const nextSlide = direction === 'next' ? flow.next : flow.prev;
+            if (nextSlide) {
+                showSlide(nextSlide);
+            }
+        }
+
+        function goToMenu() {
+            showSlide('menu');
+        }
+
+        function updateUI() {
+            const flow = slideFlow[currentSlide];
+            const homeBtn = document.getElementById('homeBtn');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const indicator = document.getElementById('slideIndicator');
+
+            // 显示/隐藏返回目录按钮
+            homeBtn.style.display = (currentSlide !== 'cover' && currentSlide !== 'menu') ? 'block' : 'none';
+
+            // 更新导航按钮
+            prevBtn.disabled = !flow.prev;
+            nextBtn.disabled = !flow.next;
+
+            // 更新进度指示器
+            if (currentSlide === 'cover') {
+                indicator.textContent = '封面';
+            } else if (currentSlide === 'menu') {
+                indicator.textContent = '目录';
+            } else if (currentSlide.includes('-menu')) {
+                indicator.textContent = '分支选择';
+            } else {
+                indicator.textContent = '内容页';
+            }
+
+            // 检查是否完成某个分支的所有幻灯片
+            if (flow.parent && flow.slides) {
+                const allVisited = flow.slides.every(s => visitedSlides[s]);
+                if (allVisited && flow.next === null) {
+                    // 自动返回分支选择页
+                    setTimeout(() => showSlide(flow.parent), 500);
+                }
+            }
+        }
+
+        // 键盘导航
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') navigate('next');
+            else if (e.key === 'ArrowLeft') navigate('prev');
+            else if (e.key === 'Home' || e.key === 'h') goToMenu();
+        });
+
+        // 初始化
+        updateUI();
+    </script>
+</body>
+</html>
